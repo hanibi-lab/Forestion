@@ -1,9 +1,8 @@
 <h1> 앞으로 만들어야되는 것 </h1>
 <h3><br> 1. </h3>
 
-<h1>🌳Forestion 프로젝트 구조</h1>
 
-# Forestion 프로젝트 구조
+# 🌳Forestion 프로젝트 구조
  ```
 ├─ 📂 src/ # 소스 코드
 │ ├─ 📂 main/ # 메인 기능 코드
