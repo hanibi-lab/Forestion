@@ -2,7 +2,7 @@
 <h3><br> 1. </h3>
 
 # Forestion 프로젝트 구조
-
+ ```
 ├─ 📂 src/ # 소스 코드
 │ ├─ 📂 main/ # 메인 기능 코드
 │ │ ├─ 📝 app.py
@@ -28,3 +28,4 @@
 │
 ├─ ⚙️ .gitignore # Git에 올리지 않을 파일 지정
 └─ 📦 requirements.txt # 프로젝트 필요 패키지
+ ```
