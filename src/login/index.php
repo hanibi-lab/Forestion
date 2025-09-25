@@ -1,10 +1,16 @@
 <html>
 <head>
+    <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+?>
     
     <title>LOGIN</title>
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
+    <?php require "./header.php"; ?> 
+    <!-- 헤더 --> 
     <form action="login.php" method="post">
         <h2>LOGIN</h2>
         <?php if (isset($_GET['error'])){?>

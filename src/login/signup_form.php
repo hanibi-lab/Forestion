@@ -4,6 +4,8 @@
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
+    <?php require "./header.php"; ?> 
+    <!-- 헤더 --> 
     <form action="signup.php" method="post">
         <h2>SIGN UP</h2>
         
