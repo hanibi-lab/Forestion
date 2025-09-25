@@ -10,7 +10,7 @@ if(isset($_SESSION['User_Id']) && isset($_SESSION['User_Name'])){
 <head>
 <meta charset="UTF-8">
 <title>Forestion</title>
-<link rel="stylesheet" href="css/style.css"> <!-- 스타일 -->
+<link rel="stylesheet" href="style.css"> <!-- 스타일 -->
 </head>
 <body>
 
@@ -45,7 +45,7 @@ if(isset($_SESSION['User_Id']) && isset($_SESSION['User_Name'])){
         // DB에서 상품 정보 8개 가져오기
         $result = $conn->query("SELECT * FROM Product_PD LIMIT 8");
         while($row = $result->fetch_assoc()):
-        ?>
+        ?> 
         <li class="prdList__item">
             <div class="thumbnail">
                 <!-- 상품 상세 페이지 링크 / 상품 클릭하면 product_detail.php?id=상품ID 로 이동 -->
