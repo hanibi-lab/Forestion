@@ -23,17 +23,6 @@
         <a href="main2.php?tag=flowerpot">화분</a>
         <a href="main2.php?tag=fertilizer">비료</a>
       </nav>
-      <!-- 기존 header 메뉴 -->
-      <!-- <ul class="category-menu">
-        <li><a href="main2.php?tag=tree">나무</a></li>
-       <li><a href="main2.php?tag=flower">꽃</a></li>
-       <li><a href="main2.php?tag=tool">도구</a></li>
-        <li><a href="main2.php?tag=flowerpot">화분</a></li>
-        <li><a href="main2.php?tag=fertilizer">비료</a></li>
-      </ul> -->
-
-
-      
 
       <div class="nav-icons"> 
         <!-- 검색 창 -->
