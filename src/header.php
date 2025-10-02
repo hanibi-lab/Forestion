@@ -17,12 +17,21 @@
 
       <!-- 카테고리 메뉴 -->
       <nav class="nav-categories">
-        <a href="tree.php">나무</a>
-        <a href="flower.php">꽃</a>
-        <a href="tool.php">도구</a>
-        <a href="flowerpot.php">화분</a>
-        <a href="fertilizer.php">비료</a>
+        <a href="main2.php?tag=tree">나무</a>
+        <a href="main2.php?tag=flower">꽃</a>
+        <a href="main2.php?tag=tool">도구</a>
+        <a href="main2.php?tag=flowerpot">화분</a>
+        <a href="main2.php?tag=fertilizer">비료</a>
       </nav>
+      <!-- 기존 header 메뉴 -->
+      <!-- <ul class="category-menu">
+        <li><a href="main2.php?tag=tree">나무</a></li>
+       <li><a href="main2.php?tag=flower">꽃</a></li>
+       <li><a href="main2.php?tag=tool">도구</a></li>
+        <li><a href="main2.php?tag=flowerpot">화분</a></li>
+        <li><a href="main2.php?tag=fertilizer">비료</a></li>
+      </ul> -->
+
 
       
 
