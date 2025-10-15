@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <title>헤더</title>
-    <link rel="stylesheet" href="css/style.css">  <!-- 공동 스타일 -->
+    <link rel="stylesheet" href="style.css">  <!-- 공동 스타일 -->
     <!--  <link rel="stylesheet" href="css/header.css">  -->  <!-- 헤더 스타일 -->
   </head>
 

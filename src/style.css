@@ -186,7 +186,7 @@ a[href="logout.php"]:hover {
 
 /* 메인 컨테이너 */
 main {
-    margin-top: 100px; /* 헤더 아래 공간 확보 */
+    margin-top: 300px; /* 헤더 아래 공간 확보 */
     width: 100%;
     flex: 1; /* 푸터 화면 아래에 두기 */
     display: block;
