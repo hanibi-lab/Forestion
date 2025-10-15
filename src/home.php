@@ -55,11 +55,13 @@ if(isset($_SESSION['User_Id']) && isset($_SESSION['User_Name'])){
                       <img src="<?php echo $row['Product_Image']; ?>" 
 			                 alt="<?php echo $row['Product_Name']; ?>">
                 </a>
+                <!-- 장바구니 기능 줄 옮김 
                 <div class="icon__box">
                     <span class="cart">
-                        ADD <!-- 장바구니 버튼, 추후 JS/PHP 연동 필요 -->
+                        ADD  장바구니 버튼, 추후 JS/PHP 연동 필요
                     </span>
                 </div>
+                -->
             </div>
             <div class="description">
                 <div class="name">
@@ -67,12 +69,24 @@ if(isset($_SESSION['User_Id']) && isset($_SESSION['User_Name'])){
                         <?php echo $row['Product_Name']; ?> <!-- 상품명 -->
                     </a>
                 </div>
+                <!-- ul을 div로 변경
                 <ul class="spec">
-                  <!-- 가격 -->
+                  <!-- 가격 
                     <li>₩<?php echo number_format($row['Product_Price']); ?></li> 
                 </ul>
+                -->
+                <div class="spec">
+                  <!-- 가격 -->
+                    <p>₩<?php echo number_format($row['Product_Price']); ?></p> 
+                </div>
                 <!-- 사이즈, 재고 -->
                 <p>사이즈: <?php echo $row['Product_Size']; ?> / 재고: <?php echo $row['Product_Count']; ?></p>
+                
+                <!-- 장바구니, 찜하기 버튼만 추가 -->
+                <button type="submit">장바구니 담기</button>
+                <button id="wishToggle" data-id="<?php echo $product['Product_Id']; ?>">
+                찜하기
+                </button>
             </div>
         </li>
         <?php endwhile; $conn->close(); ?>
