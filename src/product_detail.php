@@ -19,7 +19,7 @@ if(!$product){ echo "상품 없음"; exit;}
 
 <main class="product-detail">
   <div class="container">
-    <h1><?php echo htmlspecialchars($product['Product_Name']); ?></h1>
+    <!-- <h1><?php //echo htmlspecialchars($product['Product_Name']); ?></h1> -->
     
 			<div class="product-flex">
 			  <div class="product-image">
@@ -29,7 +29,8 @@ if(!$product){ echo "상품 없음"; exit;}
 			  <!-- 가격, 사이즈, 재고 -->
 			  <div class="product-info">
 			    <div class="info-box">
-			      <p class="price">₩<?php echo number_format($product['Product_Price']); ?></p>
+            <p>상품명: <?php echo htmlspecialchars($product['Product_Name']); ?></p>
+			      <p class="price">가격: <?php echo number_format($product['Product_Price']); ?> 원</p>
 			      <p>사이즈: <?php echo htmlspecialchars($product['Product_Size']); ?></p>
 			      <p>재고: <?php echo htmlspecialchars($product['Product_Count']); ?></p>
 			    </div>

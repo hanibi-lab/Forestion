@@ -11,7 +11,8 @@ ini_set('display_errors', 1);
 <body>
     <?php require "./header.php"; ?> 
     <!-- 헤더 --> 
-    <form action="login.php" method="post">
+    <!-- <form action="login.php" method="post"> -->
+    <form action="login.php" method="post" class="sign-form">
         <h2>LOGIN</h2>
         <?php if (isset($_GET['error'])){?>
             <p class="error"><?php echo $_GET['error']; ?></p>

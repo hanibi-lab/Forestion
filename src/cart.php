@@ -21,18 +21,55 @@ $stmt->bind_param("s",$uid);
 $stmt->execute();
 $res = $stmt->get_result();
 ?>
-<main style="margin-top:100px;">
+<!-- <main style="margin-top:100px;">
   <h2>장바구니</h2>
   <table>
     <tr><th>상품</th><th>가격</th><th>액션</th></tr>
-    <?php while($r = $res->fetch_assoc()): ?>
+    //
+    </?php while($r = $res->fetch_assoc()): ?>
       <tr>
-        <td><img src="<?php echo $r['Product_Image']; ?>" style="width:80px;"> <?php echo $r['Product_Name']; ?></td>
-        <td>₩<?php echo number_format($r['Product_Price']); ?></td>
-        <td><a href="cart.php?remove=<?php echo $r['Cart_Id']; ?>">삭제</a></td>
+        <td><img src="</?php echo $r['Product_Image']; ?>" style="width:80px;"> </?php echo $r['Product_Name']; ?></td>
+        <td>₩</?php echo number_format($r['Product_Price']); ?></td>
+        <td><a href="cart.php?remove=</?php echo $r['Cart_Id']; ?>">삭제</a></td>
       </tr>
-    <?php endwhile; ?>
+    </?php endwhile; ?>
   </table>
   <a href="checkout.php">결제하기</a>
+</main> -->
+
+<!-- 여기 부분 새로 추가 -->
+<main class="cart-main">
+  <div class="cart-container">
+    <h2>장바구니</h2>
+
+     <?php if ($res->num_rows > 0): ?>
+      <div class="cart-list">
+        <?php while ($r = $res->fetch_assoc()): ?>
+          <form id="cartForm" action="checkout.php" method="post">
+          <div class="cart-item">
+            <div class="cart-left">
+              <input type="checkbox" name="selected_items[]" value="<?= $r['Cart_Id'] ?>">
+              <a href="product_detail.php?id=<?= $r['Product_Id'] ?>">
+                <img src="<?= htmlspecialchars($r['Product_Image']) ?>" alt="<?= htmlspecialchars($r['Product_Name']) ?>">
+              </a>
+              <a href="product_detail.php?id=<?= $r['Product_Id'] ?>">
+                <p>상품명: <?= htmlspecialchars($r['Product_Name']) ?></p>
+              </a>
+            </div>
+            <div class="cart-right">
+              <span class="price">가격: <?= number_format($r['Product_Price']) ?>원</span>
+              <a href="cart.php?remove=<?= $r['Cart_Id'] ?>" class="delete-btn">삭제</a>
+            </div>
+          </div>
+        <?php endwhile; ?>
+      </div>
+      <div class="checkout-btn-wrap">
+         <button form="cartForm" type="submit" class="checkout-btn">선택 상품 결제하기</button>
+      </div>
+    <?php else: ?>
+      <p class="empty-text">장바구니에 담긴 상품이 없습니다.</p>
+    <?php endif; ?>
+  </div>
 </main>
+
 <?php require "./footer.php"; ?>
