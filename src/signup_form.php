@@ -6,7 +6,8 @@
 <body>
     <?php require "./header.php"; ?> 
     <!-- 헤더 --> 
-    <form action="signup.php" method="post">
+    <!-- <form action="signup.php" method="post"> -->
+    <form action="signup.php" method="post" class="sign-form">
         <h2>SIGN UP</h2>
         
         <label>User Name</label>

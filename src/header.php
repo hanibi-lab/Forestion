@@ -17,11 +17,10 @@
 
       <!-- 카테고리 메뉴 -->
       <nav class="nav-categories">
-        <a href="main2.php?tag=tree">나무</a>
-        <a href="main2.php?tag=flower">꽃</a>
+        <a href="main2.php?tag=plants">식물</a>
+        <a href="main2.php?tag=seed">씨앗</a>
         <a href="main2.php?tag=tool">도구</a>
-        <a href="main2.php?tag=flowerpot">화분</a>
-        <a href="main2.php?tag=fertilizer">비료</a>
+        <a href="main2.php?tag=etc">기타</a>
       </nav>
 
       <div class="nav-icons"> 

@@ -76,8 +76,8 @@ body {
 }
 
 
-/* 로그인/회원가입 폼 박스 */
-form {
+/* -----------------로그인/회원가입 폼 박스 --------------------*/
+/* form {
     background-color: #fff;
     padding: 40px;
     border-radius: 12px;
@@ -86,14 +86,14 @@ form {
     box-sizing: border-box;
 }
 
-/* 제목 */
+/* 제목 
 form h2 {
     text-align: center;
     margin-bottom: 25px;
     color: #333;
 }
 
-/* 라벨 */
+/* 라벨 
 form label {
     display: block;
     margin-bottom: 6px;
@@ -101,7 +101,7 @@ form label {
     font-weight: bold;
 }
 
-/* 입력창 */
+/* 입력창 
 form input[type="text"],
 form input[type="password"] {
     width: 100%;
@@ -120,8 +120,70 @@ form input[type="password"]:focus {
     outline: none;
 }
 
-/* 버튼 */
+/* 버튼 
 form button {
+    width: 100%;
+    padding: 12px;
+    background-color: #E5E0D8;; /* 색 변경 
+    border: none;
+    border-radius: 6px;
+    color: #333;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+form button:hover {
+    background-color: #D9E9CF;  /* 색 변경 
+} */
+
+/*------------------ 로그인/회원가입 폼 박스 ------------*/
+/* 기존 form 이름을 sign-form으로 수정*/
+.sign-form {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    width: 350px;
+    box-sizing: border-box;
+}
+
+/* 제목 */
+.sign-form h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #333;
+}
+
+/* 라벨 */
+.sign-form label {
+    display: block;
+    margin-bottom: 6px;
+    color: #555;
+    font-weight: bold;
+}
+
+/* 입력창 */
+.sign-form input[type="text"],
+.sign-form input[type="password"] {
+    width: 100%;
+    padding: 10px 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 14px;
+    transition: border 0.3s;
+}
+
+.sign-form input[type="text"]:focus,
+.sign-form input[type="password"]:focus {
+    border-color: #007BFF;
+    outline: none;
+}
+
+/* 버튼 */
+.sign-form button {
     width: 100%;
     padding: 12px;
     background-color: #E5E0D8;; /* 색 변경 */
@@ -133,7 +195,7 @@ form button {
     transition: background 0.3s;
 }
 
-form button:hover {
+.sign-form button:hover {
     background-color: #D9E9CF;  /* 색 변경 */
 }
 
@@ -370,7 +432,7 @@ main {
   box-shadow: none; /* 그림자 제거 */ 
   display: flex; 
   flex-direction: column;
-  gap: 10px; 
+  gap: 5px; 
 } 
 
 /* 수량 + 버튼들 */ 
@@ -380,19 +442,22 @@ main {
   flex-wrap: wrap; 
   gap: 10px; 
   margin-top: 10px; 
+  width: 100%;
 } 
 
 /* 수량 입력창 */ 
 .action-row input[type="number"] { 
-  width: 60px; text-align: center; 
+  width: 60px; 
+  text-align: center; 
   border: 1px solid #bbb;
   border-radius: 5px;
   padding: 4px; 
+  flex: 0 0 auto;  /* 글씨와 고정 폭 유지 */
 } 
   
-/* 장바구니 버튼 */ 
+/* 장바구니 버튼, 찜 버튼 */ 
 
-.cart-btn { 
+.cart-btn, .wish-btn { 
   background-color: #fff;
   color: #000; 
   border: 1px solid #bbb; 
@@ -402,13 +467,13 @@ main {
   transition: 0.2s; 
 } 
   
-.cart-btn:hover {
+.cart-btn:hover, .wish-btn:hover {
   border: 1px solid #000000;
   background-color: #ffffff; 
 } 
   
  /* 찜 버튼 */ 
-.wish-btn { 
+/* .wish-btn { 
   background-color: #fff; 
   color: #000; 
   border: 1px solid #bbb; 
@@ -417,11 +482,12 @@ main {
   cursor: pointer; 
   transition: 0.2s; 
 } 
-  
+   
 .wish-btn:hover { 
   border: 1px solid #000000; 
   background-color: #ffffff; 
 }
+  */
 
 /* 탭 메뉴 */
 .tabProduct {
@@ -493,6 +559,379 @@ section {
 .review-form select,
 .review-form button {
   margin-top: 10px;
+}
+
+
+/* ------------------- mypage.css ------------------- */
+/* ----- 마이페이지 공통 ----- */
+.mypage-main{
+  margin-top:600px;
+}
+
+.mypage-container {
+  width: 100%;
+  max-width: 1000px;
+  margin: 100px auto;
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.1);
+}
+
+/* ----- 프로필 섹션 ----- */
+.mypage-profile {
+  display: flex;
+  align-items: center;
+  margin-bottom: 40px;
+  background-color: #e9ece6;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.profile-img {
+  width: 120px;
+  height: 120px;
+  border-radius: 5px;
+  margin-right: 30px;
+  object-fit: cover;
+  background-color: white;
+}
+
+.profile-info h2 {
+  margin-bottom: 10px;
+  font-size: 1.5em;
+}
+
+.profile-info p {
+  margin: 6px 0;
+}
+
+/* ----- 메뉴 버튼 ----- */
+.mypage-menu {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.mypage-menu button {
+  flex: 1 1 calc(50% - 10px);
+  padding: 15px;
+  border: none;
+  background-color: #96A78D;
+  color: white;
+  font-size: 1em;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: 0.3s;
+}
+
+.mypage-menu button:hover {
+  background-color: #748873;
+}
+/* ----- 주문 내역 ----- */
+.order-section, .wishlist-section {
+  max-width: 1000px;
+  margin: 50px auto;
+  background: #fff;
+  padding: 30px;
+  /* border-radius: 10px;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.1); */
+}
+
+.order-section h3,
+.wishlist-section h3 {
+  margin-bottom: 20px;
+  color: #333;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 8px;
+}
+
+.order-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.order-item:last-child {
+  border-bottom: none;
+}
+
+.empty-text {
+  text-align: center;
+  color: #888;
+  padding: 20px 0;
+}
+
+/* ----- 찜 목록 ----- */
+.wishlist-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 20px;
+}
+
+.wishlist-item {
+  text-align: center;
+  background: #fafafa;
+  padding: 10px;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+.wishlist-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.wishlist-item img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+
+.wishlist-item p {
+  font-size: 0.95em;
+  color: #333;
+  margin: 0;
+}
+
+/* ------------------- cart.css ------------------- */
+.cart-main {
+  margin-top: 150px;
+}
+
+.cart-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  background: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.1);
+}
+
+.cart-container h2 {
+  margin-bottom: 25px;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 10px;
+  color: #333;
+}
+
+/* .cart-container form {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;     /* 화면 좁아지면 줄 바꿈 
+  flex: 1 1 auto;      /* 공간을 균형있게 차지       
+  box-sizing: border-box;
+} */
+
+/* --- 장바구니 리스트 --- */
+.cart-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  font-weight: bold;
+  color: #555;
+}
+
+/* --- 장바구니 아이템 --- */
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border: 1px solid #eceee8;
+  border-radius: 8px;
+  background-color: #fafafa;
+  transition: 0.3s;
+}
+
+.cart-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.cart-left img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  background-color: white;
+}
+
+/* .cart-info {
+  display: flex;
+  flex-direction: column;
+} */
+
+.cart-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+
+.delete-btn {
+  background-color: #b33a3a;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.delete-btn:hover {
+  background-color: #922a2a;
+}
+
+.checkout-btn-wrap {
+  text-align: right;
+  margin-top: 25px;
+}
+
+.checkout-btn {
+  display: inline-block;
+  background-color: #748873;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.checkout-btn:hover {
+  background-color: #5a6a59;
+}
+/* 
+.product-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.product-name {
+  margin: 0;
+  font-size: 1em;
+  transition: all 0.3s ease;
+}
+
+.product-link:hover .product-name {
+  text-decoration: underline;
+}
+
+.checkout-fixed {
+  position: sticky;
+  bottom: 0;
+  text-align: right;
+  margin-top: 20px;
+} */
+
+
+/* ----- 장바구니가 비었을 때 ----- */
+.empty-text {
+  text-align: center;
+  color: #888;
+  padding: 20px 0;
+}
+
+/*--------------------- checkout.php ----------------------*/
+
+.checkout-container {
+  width: 100%;
+  max-width: 800px;
+  margin: 120px auto;
+  background: #fff;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.1);
+}
+
+section h3 {
+  border-bottom: 2px solid #96A78D;
+  padding-bottom: 8px;
+  margin-bottom: 20px;
+  font-size: 1.2em;
+  color: #333;
+}
+
+.order-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.order-item img {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.order-info {
+  flex: 1;
+  margin-left: 15px;
+}
+
+.order-info p {
+  margin: 0;
+  font-weight: bold;
+}
+
+.total-price {
+  text-align: right;
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+section input, section select {
+  width: 90%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  outline: none;
+  font-size: 0.95em;
+}
+
+.receiver-info label {
+  display: block;
+  font-weight: bold;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+.receiver-info textarea {
+  width: 90%;
+  min-height: 80px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  resize: none;
+  padding: 10px;
+  font-size: 0.95em;
+}
+
+.checkout-btn-wrap {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.checkout-btn {
+  background-color: #96A78D;
+  color: white;
+  border: none;
+  padding: 12px 40px;
+  border-radius: 8px;
+  font-size: 1.1em;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.checkout-btn:hover {
+  background-color: #748873;
 }
 
 /* 푸터 */
