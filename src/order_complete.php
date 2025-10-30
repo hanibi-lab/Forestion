@@ -5,7 +5,8 @@ session_start();
 include "db_conn.php";
 if(!isset($_SESSION['User_Id'])){ header("Location: index.php"); exit;}
 $uid = $_SESSION['User_Id'];
-$rec = $_POST['reciever']; $phone = $_POST['phone']; $addr = $_POST['addr']; $pay = $_POST['payment'];
+$orderName = $_POST['order_name']; $order_Phone = $_POST['order_phone'];  
+$receiver_Addr = $_POST['receiver_addr']; $pay = $_POST['payment'];
 
 // 장바구니에서 상품 불러와 총액 계산
 $stmt = $conn->prepare("SELECT p.Product_Id, p.Product_Price FROM Cart_CT c JOIN Product_PD p ON c.Cart_PD_Id = p.Product_Id WHERE c.Cart_UR_Id = ?");

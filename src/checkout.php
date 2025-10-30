@@ -46,7 +46,7 @@ $total = 0;
 <main class="checkout-main">
   <div class="checkout-container">
     <h2>주문서 작성</h2>
-
+    
     <section class="order-summary">
       <h3>주문 상품</h3>
       <?php while($r = $res->fetch_assoc()):
@@ -63,7 +63,7 @@ $total = 0;
       <?php endwhile; ?>
       <div class="total-price">총 상품 금액: <strong>₩<?= number_format($total) ?></strong></div>
     </section>
-
+      <form action="order_complete.php" method="post">
     <section class="order-info-section">
       <h3>주문자 정보</h3>
       <input type="text" name="order_name" placeholder="이름" required>
@@ -92,6 +92,7 @@ $total = 0;
     <div class="checkout-btn-wrap">
       <button type="submit" class="checkout-btn">결제하기</button>
     </div>
+    </form>
   </div>
 </main>
 <?php require "./footer.php"; ?>
