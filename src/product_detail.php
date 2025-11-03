@@ -19,7 +19,7 @@ if(!$product){ echo "상품 없음"; exit;}
 
 <main class="product-detail">
   <div class="container">
-    <!-- <h1><?php //echo htmlspecialchars($product['Product_Name']); ?></h1> -->
+    <h1><?php echo htmlspecialchars($product['Product_Name']); ?></h1>
     
 			<div class="product-flex">
 			  <div class="product-image">
@@ -37,15 +37,30 @@ if(!$product){ echo "상품 없음"; exit;}
 			    
 			      <!-- 수량 + 장바구니 + 찜하기 -->
 			      <div class="action-row">
-			        <form action="cart_add.php" method="post" class="cart-form">
+			        <!-- <form action="cart_add.php" method="post" class="cart-form"> -->
+              <form id="cartForm" class="cart-form">
 			          <input type="hidden" name="product_id" value="<?php echo $product['Product_Id']; ?>">
 			          수량:
 			          <input type="number" name="qty" value="1" min="1" max="<?php echo $product['Product_Count']; ?>">
-			          <button type="submit" class="cart-btn">장바구니 담기</button>
-			        <button id="wishToggle" data-id="<?php echo $product['Product_Id']; ?>" class="wish-btn">
+			          <!-- <button type="submit" class="cart-btn">장바구니 담기</button> -->
+                <button type="button" id="addCartBtn" class="cart-btn">장바구니 담기</button>
+			          <button type="button" id="wishToggle" data-id="<?php echo $product['Product_Id']; ?>" class="wish-btn">
 			          찜하기
 			        </button>
 			        </form>
+
+              <script>
+              document.getElementById('addCartBtn').addEventListener('click', async function(e){
+                const form = document.getElementById('cartForm');
+                const formData = new FormData(form);
+                const res = await fetch('cart_add.php', {
+                  method: 'POST',
+                  body: formData
+                });
+                const data = await res.json();
+                alert(data.message);
+              });
+              </script>
 			      </div>
 			  </div>
 			</div>

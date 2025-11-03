@@ -3,7 +3,7 @@
     <title>SIGN UP</title>
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
-<body>
+<body class="sign-body">
     <?php require "./header.php"; ?> 
     <!-- 헤더 --> 
     <!-- <form action="signup.php" method="post"> -->

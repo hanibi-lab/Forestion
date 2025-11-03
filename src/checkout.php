@@ -6,7 +6,7 @@ include "db_conn.php";
 require "./header.php";
 if(!isset($_SESSION['User_Id'])){ header("Location: index.php"); exit; }
 $uid = $_SESSION['User_Id'];
-//추가
+
 // 선택된 상품 불러오기
 $selected = $_POST['selected_items'] ?? [];
 if (empty($selected)) {
@@ -15,7 +15,9 @@ if (empty($selected)) {
 }
 
 $in = implode(',', array_fill(0, count($selected), '?'));
-$stmt = $conn->prepare("SELECT c.Cart_Id, p.Product_Name, p.Product_Price, p.Product_Image 
+// $stmt = $conn->prepare("SELECT c.Cart_Id, p.Product_Name, p.Product_Price, p.Product_Image 
+//c.Cart_Quantity, p.Product_Id 추가
+$stmt = $conn->prepare("SELECT c.Cart_Id, c.Cart_Quantity, p.Product_Id,p.Product_Name, p.Product_Price, p.Product_Image 
   FROM Cart_CT c 
   JOIN Product_PD p ON c.Cart_PD_Id = p.Product_Id 
   WHERE c.Cart_Id IN ($in) AND c.Cart_UR_Id = ?");
@@ -47,6 +49,7 @@ $total = 0;
   <div class="checkout-container">
     <h2>주문서 작성</h2>
     
+    <form action="order_complete.php" method="post">  <!-- order_complet에 정보 보내기 -->
     <section class="order-summary">
       <h3>주문 상품</h3>
       <?php while($r = $res->fetch_assoc()):
@@ -59,11 +62,16 @@ $total = 0;
             <span>수량: <?= $r['Cart_Quantity'] ?>개</span>
           </div>
           <span class="price">₩<?= number_format($subtotal) ?></span>
+          <!-- order_complete.php로 보낼 데이터 -->
+          <input type="hidden" name="selected_items[]" value="<?= $r['Cart_Id'] ?>">
+          <input type="hidden" name="product_id[]" value="<?= $r['Product_Id'] ?>">
+          <input type="hidden" name="quantity[]" value="<?= $r['Cart_Quantity'] ?>">
+          <input type="hidden" name="price[]" value="<?= $r['Product_Price'] ?>">
         </div>
       <?php endwhile; ?>
       <div class="total-price">총 상품 금액: <strong>₩<?= number_format($total) ?></strong></div>
     </section>
-      <form action="order_complete.php" method="post">
+
     <section class="order-info-section">
       <h3>주문자 정보</h3>
       <input type="text" name="order_name" placeholder="이름" required>
@@ -71,7 +79,7 @@ $total = 0;
     </section>
 
     <section class="receiver-info">
-      <h3>수령인 정보</h3>
+      <h3>수령자 정보</h3>
       <input type="text" name="receiver_name" placeholder="이름" required>
       <input type="text" name="receiver_phone" placeholder="전화번호" required>
       <input type="text" name="receiver_addr" placeholder="주소" required>

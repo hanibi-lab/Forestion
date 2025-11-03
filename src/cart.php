@@ -16,7 +16,14 @@ if(isset($_GET['remove'])){
 }
 
 // 장바구니 불러오기
-$stmt = $conn->prepare("SELECT c.Cart_Id, p.* FROM Cart_CT c JOIN Product_PD p ON c.Cart_PD_Id = p.Product_Id WHERE c.Cart_UR_Id = ?");
+// $stmt = $conn->prepare("SELECT c.Cart_Id, p.* FROM Cart_CT c JOIN Product_PD p ON c.Cart_PD_Id = p.Product_Id WHERE c.Cart_UR_Id = ?");
+//변경(추가)
+$stmt = $conn->prepare("
+    SELECT c.Cart_Id, c.Cart_Quantity, p.Product_Id, p.Product_Name, p.Product_Price, p.Product_Image, p.Product_Count
+    FROM Cart_CT c 
+    JOIN Product_PD p ON c.Cart_PD_Id = p.Product_Id 
+    WHERE c.Cart_UR_Id = ?
+");
 $stmt->bind_param("s",$uid);
 $stmt->execute();
 $res = $stmt->get_result();
@@ -43,26 +50,30 @@ $res = $stmt->get_result();
     <h2>장바구니</h2>
 
      <?php if ($res->num_rows > 0): ?>
+      <form id="cartForm" action="checkout.php" method="post">
       <div class="cart-list">
         <?php while ($r = $res->fetch_assoc()): ?>
-          <form id="cartForm" action="checkout.php" method="post">
           <div class="cart-item">
             <div class="cart-left">
               <input type="checkbox" name="selected_items[]" value="<?= $r['Cart_Id'] ?>">
               <a href="product_detail.php?id=<?= $r['Product_Id'] ?>">
                 <img src="<?= htmlspecialchars($r['Product_Image']) ?>" alt="<?= htmlspecialchars($r['Product_Name']) ?>">
               </a>
-              <a href="product_detail.php?id=<?= $r['Product_Id'] ?>">
+              <!-- <a href="product_detail.php?id=</?= $r['Product_Id'] ?>"> -->
                 <p>상품명: <?= htmlspecialchars($r['Product_Name']) ?></p>
               </a>
             </div>
+            
             <div class="cart-right">
-              <span class="price">가격: <?= number_format($r['Product_Price']) ?>원</span>
+              <!-- <span class="price">가격: </?= number_format($r['Product_Price']) ?>원</span> -->
+              <p>수량: <?= $r['Cart_Quantity'] ?>개</p>
+              <span class="price">가격: <?= number_format($r['Product_Price'] * $r['Cart_Quantity']) ?>원</span>
               <a href="cart.php?remove=<?= $r['Cart_Id'] ?>" class="delete-btn">삭제</a>
             </div>
           </div>
         <?php endwhile; ?>
       </div>
+      
       <div class="checkout-btn-wrap">
          <button form="cartForm" type="submit" class="checkout-btn">선택 상품 결제하기</button>
       </div>
