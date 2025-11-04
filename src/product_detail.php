@@ -165,6 +165,7 @@ if(!$product){ echo "상품 없음"; exit;}
     <section id="prdQnA">
       <h3>상품문의</h3>
       <!-- <p>Q&A 기능 자리</p> -->
+       <!-- <p>Q&A 기능 자리 구현</p> -->
        <ul class="QnA_list">
         <li class="QnA_item">
           <div class="QnA_question">
@@ -215,7 +216,7 @@ document.getElementById('wishToggle').addEventListener('click', async function()
 </script>
 
 <script>
-// Q&A 토글 기능 (질문 박스 전체 클릭 가능 + 한 번에 하나만 열림)
+// Q&A 토글 기능 (질문 박스 전체 클릭 가능 + 한 번에 하나만 열림 ) 
 const qnaItems = document.querySelectorAll(".QnA_item");
 
 qnaItems.forEach(item => {

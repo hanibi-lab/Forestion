@@ -1,5 +1,5 @@
 <?php
-// edit_profile.php
+// edit_profile.php 내 정보 수정
 error_reporting(E_ALL); ini_set('display_errors',1);
 session_start(); 
 include "db_conn.php"; 

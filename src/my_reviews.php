@@ -1,5 +1,5 @@
 <?php
-//my_reviews.php 내가 쓴 리뷰 보기
+//my_reviews.php 내가 쓴 리뷰 보기 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 session_start();

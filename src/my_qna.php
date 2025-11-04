@@ -1,4 +1,5 @@
 <?php
+//my_qna.php
 session_start();
 require "./header.php";
 if(!isset($_SESSION['User_Id'])) {
