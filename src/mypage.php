@@ -133,8 +133,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_account'])) {
     <div class="mypage-menu">
       <button onclick="location.href='edit_profile.php'"> 정보 수정</button>
       <!-- my_qna.php, my_reviews.php 구현? -->
-      <button type="submit" name="my_qna.php"> 내가 쓴 Q&A 보기</button>
-      <button type="submit" name="my_reviews.php"> 내가 쓴 후기 보기</button>
+      <!-- <button type="submit" name="my_qna.php"> 내가 쓴 Q&A 보기</button> -->
+      <button onclick="location.href='my_qna.php'"> Q&A 보기</button>
+      <!-- <button type="submit" name="my_reviews.php"> 내가 쓴 후기 보기</button> -->
+      <button onclick="location.href='my_reviews.php'">내가 쓴 후기 보기</button>
       <button onclick="deleteAccount()">회원 탈퇴</button>
     </div>
   </div>

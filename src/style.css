@@ -28,7 +28,8 @@ body {
 }
 
 /*공통 padding-top*/
-main, .cart-main, .mypage-main, .product-detail, .container , .ODdetil-container{
+main, .cart-main, .mypage-main, .product-detail, .container 
+, .ODdetil-container, .myreviews-main {
   padding-top: 90px;
 }
 
@@ -400,9 +401,9 @@ main {
 /* -------------------  product_detail.php   ----------------- */
 /*  상품 상세 정보  */
 /* 메인 레이아웃 */
-.product-detail {
-    /* padding-top: 800px; */
-}
+/* .product-detail {
+     padding-top: 800px; 
+} */
 
 .product-detail .container {
   max-width: 900px;
@@ -574,6 +575,90 @@ section {
   margin-top: 10px;
 }
 
+/* ------------- QnA (상품문의) ------------- */
+.QnA_list {
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+  border-top: 1px solid #ddd;
+}
+
+.QnA_item {
+  border-bottom: 1px solid #ddd;
+  background: #fff;
+  transition: background 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.QnA_item.active {
+  background: #f9f9f9;
+}
+
+/* 질문 부분 */
+.QnA_question {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  padding: 15px 20px;
+}
+
+.QnA_title {
+  font-size: 1rem;
+  color: #333;
+  margin: 0;
+  font-weight: bold;
+}
+
+/* 버튼 (플러스/마이너스) */
+.QnA_btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  font-weight: bold;
+  color: #96A78D;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.QnA_btn:hover {
+  transform: scale(1.1);
+}
+
+/* + / - 아이콘 표시 */
+.QnA_icon.close {
+  display: none;
+}
+
+.QnA_item.active .QnA_icon.open {
+  display: none;
+}
+
+.QnA_item.active .QnA_icon.close {
+  display: inline;
+}
+
+/* 답변 부분 */
+.QnA_answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+  background: #fdfdfd;
+  padding: 0 20px;
+}
+
+.QnA_item.active .QnA_answer {
+  max-height: 200px; /* 내용이 길다면 더 크게 조정 가능 */
+  padding: 15px 20px;
+}
+
+.QnA_text {
+  color: #555;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0;
+}
 
 /* ------------------- mypage.php ------------------- */
 /* ----- 마이페이지 공통 ----- */
@@ -711,7 +796,34 @@ section {
   margin: 0;
 }
 
-/* ------------------- cart.css ------------------- */
+/*------- 내가 쓴 후기 보기 -------*/
+.review-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.review-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 15px;
+}
+
+.review-img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.review-content h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+/* ------------------- cart.php ------------------- */
 .cart-main {
   margin-top: 150px;
 }
@@ -1013,7 +1125,50 @@ section input, section select {
   font-weight: bold;
 }
 
-/* 푸터 */
+/* ------------------- my_qna.php  ------------------- */
+.qna-title {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.qna-subtext {
+  text-align: center;
+  color: #777;
+  margin-bottom: 30px;
+  font-size: 0.95rem;
+}
+
+.QnA_admin {
+  font-size: 0.9rem;
+  color: #96A78D;
+  margin-top: 10px;
+  font-style: italic;
+}
+
+/* 돌아가기 버튼 */
+.back-btn-box {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.back-btn {
+  padding: 10px 20px;
+  background: #96A78D;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.back-btn:hover {
+  background: #7f9178;
+}
+
+
+/* footer.php 푸터 */
 .footer {
     background-color: #eeede2; /* body 배경과 맞춤 */
     color: #333;

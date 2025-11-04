@@ -164,7 +164,38 @@ if(!$product){ echo "상품 없음"; exit;}
 
     <section id="prdQnA">
       <h3>상품문의</h3>
-      <p>Q&A 기능 자리</p>
+      <!-- <p>Q&A 기능 자리</p> -->
+       <ul class="QnA_list">
+        <li class="QnA_item">
+          <div class="QnA_question">
+            <h4 class="QnA_title">배달 기간은 얼마나 걸리나요?</h4>
+            <button class="QnA_btn">
+              <span class="QnA_icon open">+</span>
+              <span class="QnA_icon close">−</span>
+            </button>
+          </div>
+          <div class="QnA_answer">
+            <p class="QnA_text">
+              보통 주문일로부터 1~2일 내 발송되며, 지역에 따라 2~4일 정도 소요됩니다.
+            </p>
+          </div>
+        </li>
+
+        <li class="QnA_item">
+          <div class="QnA_question">
+            <h4 class="QnA_title">교환이나 반품은 어떻게 하나요?</h4>
+            <button class="QnA_btn">
+              <span class="QnA_icon open">+</span>
+              <span class="QnA_icon close">−</span>
+            </button>
+          </div>
+          <div class="QnA_answer">
+            <p class="QnA_text">
+              상품 수령 후 7일 이내 고객센터로 문의 주시면 교환 또는 반품이 가능합니다.
+            </p>
+          </div>
+        </li>
+      </ul>
     </section>
   </div>
 </main>
@@ -182,5 +213,46 @@ document.getElementById('wishToggle').addEventListener('click', async function()
   alert(j.message);
 });
 </script>
+
+<script>
+// Q&A 토글 기능 (질문 박스 전체 클릭 가능 + 한 번에 하나만 열림)
+const qnaItems = document.querySelectorAll(".QnA_item");
+
+qnaItems.forEach(item => {
+  const question = item.querySelector(".QnA_question");
+  const button = item.querySelector(".QnA_btn");
+
+  // 질문 박스를 클릭했을 때
+  question.addEventListener("click", () => toggleSingleQnA(item));
+
+  // 버튼을 클릭했을 때 (이벤트 중복 방지)
+  button.addEventListener("click", (e) => {
+    e.stopPropagation(); // question 이벤트로 중복 실행 방지
+    toggleSingleQnA(item);
+  });
+});
+
+function toggleSingleQnA(item) {
+  const isActive = item.classList.contains("active");
+
+  // 다른 QnA 닫기
+  document.querySelectorAll(".QnA_item").forEach(i => i.classList.remove("active"));
+
+  // 클릭한 항목만 열기
+  if (!isActive) item.classList.add("active");
+}
+</script>
+
+<!-- <script>
+// Q&A 토글 기능 (여러 개 동시에 열림 가능)
+const btns = document.querySelectorAll(".QnA_btn");
+
+btns.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const faqItem = btn.closest(".QnA_item");
+    faqItem.classList.toggle("active"); // toggle로 상태만 반전
+  });
+});
+</script> -->
 
 <?php require "./footer.php"; ?>
