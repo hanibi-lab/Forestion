@@ -10,7 +10,15 @@
     <div class="header">
       <!-- 로고 -->
       <div class="logo">
+          <?php if (isset($_SESSION['User_Id'])): ?> <!-- User_Id 확인 -->
+
+        <!-- 로그인 상태면 home.php(메인 페이지)로 -->
+        <a href="home.php">
+          <?php else: ?>
+
+        <!-- 비로그인 상태면 index.php(로그인 페이지)로 -->
         <a href="index.php">
+           <?php endif; ?>
           <img src="images/logo.png" alt="Forestion">    <!-- 로고 이미지 클릭 시 index.php로 넘어감 -->
         </a>
       </div>
@@ -37,7 +45,13 @@
         </a>
         
         <!-- 로그인 페이지 -->
-        <a href="login.php" class="login-text">Login</a>
+        <!-- <a href="login.php" class="login-text">Login</a> -->
+        <!-- 로그인 / 로그아웃 추가-->
+        <?php if (isset($_SESSION['User_Id'])): ?>
+          <a href="logout.php" class="login-text">Logout</a>
+        <?php else: ?>
+          <a href="index.php" class="login-text">Login</a>
+        <?php endif; ?>
       </div>
     </div>
 </html>

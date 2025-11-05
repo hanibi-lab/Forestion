@@ -19,8 +19,8 @@ if(isset($_SESSION['User_Id']) && isset($_SESSION['User_Name'])){
 <?php require "./header.php"; ?> <!-- 헤더: 로고, 카테고리, 로그인/마이페이지 -->
 
 <main>
- <h1>Hello, <?php echo $_SESSION['User_Name']; ?></h1>
-    <a href="logout.php">Logout</a>
+ <!-- <h1>Hello, <?php echo $_SESSION['User_Name']; ?></h1>
+    <a href="logout.php">Logout</a> -->
 <?php
 }else{
     header("Location: index.php");

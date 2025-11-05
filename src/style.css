@@ -239,8 +239,8 @@ h1 {
     text-align: center;
     color: #333;
 }
-
-a[href="logout.php"] {
+/*logout 디자인 없애도 괜찮지 않을까?*/
+/* a[href="logout.php"] {
     display: block;
     width: 100px;
     margin: 20px auto;
@@ -255,7 +255,7 @@ a[href="logout.php"] {
 
 a[href="logout.php"]:hover {
     background-color: #a71d2a;
-}
+} */
 
 /* ---------------- 메인 페이지 전용 스타일 ---------------- */
 /*home.php*/

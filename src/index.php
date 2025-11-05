@@ -3,6 +3,12 @@
     <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
+
+// 이미 로그인한 상태라면 home.php로 이동
+if (isset($_SESSION['User_Id']) && isset($_SESSION['User_Name'])) {
+    header("Location: home.php");
+    exit();
+}
 ?>
     
     <title>LOGIN</title>
