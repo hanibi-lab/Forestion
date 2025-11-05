@@ -42,12 +42,12 @@ if (session_status() === PHP_SESSION_NONE) {
          
         <!-- 마이페이지 -->
         <a href="mypage.php">
-          <img src="images/mypage.png" alt="마이페이지" class="icon">
+          <img src="image/mypage_icon.png" alt="마이페이지" class="icon">
         </a>
 
         <!-- 장바구니 -->
         <a href="cart.php">
-          <img src="images/cart.png" alt="장바구니" class="icon">
+          <img src="image/cart_icon.png" alt="장바구니" class="icon">
         </a>
         
         <!-- 로그인 페이지 -->

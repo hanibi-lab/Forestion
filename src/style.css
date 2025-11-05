@@ -63,12 +63,21 @@ main, .cart-main, .mypage-main, .product-detail, .container
   align-items: center;
 }
 
+/* 아이콘 크기 및 hover 효과 */
 .nav-icons .icon {
-  height: 28px;
+  height: 40px;
+  width: 40px;
   margin-left: 20px;
   cursor: pointer;
+  transition: filter 0.3s ease, opacity 0.3s ease;
 }
 
+.nav-icons .icon:hover {
+  filter: brightness(0) invert(1); /* 흑백 반전 */
+  opacity: 0.9; /* 살짝 부드럽게 */
+}
+
+/* 로그인 텍스트 */
 .nav-icons .login-text {
   margin-left: 20px;
   margin-right: 50px;
@@ -76,12 +85,12 @@ main, .cart-main, .mypage-main, .product-detail, .container
   color: #333;
   font-size: 23px;
   font-weight: bold;
+  transition: color 0.3s ease;
 }
 
-.nav-icons .login-text:hover {    /*선택 시 색상 변화*/
-  color: #ffffff;
+.nav-icons .login-text:hover {
+  color: #ffffff; /* hover 시 글자 색 변경 */
 }
-
 
 /* -----------------로그인/회원가입 폼 박스 --------------------*/
 /* form {
