@@ -69,9 +69,9 @@ if(isset($_SESSION['User_Id']) && isset($_SESSION['User_Name'])){
                         <?php echo $row['Product_Name']; ?> <!-- 상품명 -->
                     </a>
                 </div>
-                <!-- ul을 div로 변경
+                <!-- ul을 div로 변경 
                 <ul class="spec">
-                  <!-- 가격 
+                   가격 
                     <li>₩<?php echo number_format($row['Product_Price']); ?></li> 
                 </ul>
                 -->
