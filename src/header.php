@@ -1,3 +1,9 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="ko">
   <head>
@@ -19,7 +25,7 @@
         <!-- 비로그인 상태면 index.php(로그인 페이지)로 -->
         <a href="index.php">
            <?php endif; ?>
-          <img src="images/logo.png" alt="Forestion">    <!-- 로고 이미지 클릭 시 index.php로 넘어감 -->
+          <img src="image/logo.png" alt="Forestion" width="120" height="auto">   <!-- 로고 이미지 클릭 시 index.php로 넘어감 -->
         </a>
       </div>
 
