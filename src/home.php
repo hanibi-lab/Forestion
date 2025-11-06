@@ -32,7 +32,7 @@ if(isset($_SESSION['User_Id']) && isset($_SESSION['User_Name'])){
 <section class="slider">
     <div class="slides">
         <!-- 여기서는 임시 이미지. DB 불러오려면 SELECT문 써서 불러올 수 있음 -->
-        <img src="images/banner1.jpg" alt="배너1">
+        <img src="image/banner1.png" alt="배너1">
         <img src="images/banner2.jpg" alt="배너2">
         <img src="images/banner3.jpg" alt="배너3">
     </div>
