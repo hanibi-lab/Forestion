@@ -1142,12 +1142,12 @@ section input, section select {
   color: #333;
 }
 
-.qna-subtext {
+/* .qna-subtext {
   text-align: center;
   color: #777;
   margin-bottom: 30px;
   font-size: 0.95rem;
-}
+} */
 
 .QnA_admin {
   font-size: 0.9rem;

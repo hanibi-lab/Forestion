@@ -13,7 +13,7 @@ $uid = $_SESSION['User_Id'];
   <div class="mypage-container">
 
     <h2 class="qna-title">많이 물어보는 문의</h2>
-    <p class="qna-subtext">내용이 있을랑가?</p>
+    <!-- <p class="qna-subtext">내용이 있을랑가?</p> -->
     <section id="prdQnA">
       <!-- <p>Q&A 기능 자리</p> -->
        <ul class="QnA_list">
