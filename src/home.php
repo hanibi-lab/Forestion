@@ -83,7 +83,6 @@ if(isset($_SESSION['User_Id']) && isset($_SESSION['User_Name'])){
                 <p>사이즈: <?php echo $row['Product_Size']; ?> / 재고: <?php echo $row['Product_Count']; ?></p>
                 
                 <!-- 장바구니, 찜하기 버튼만 추가 -->
-                <button type="submit">장바구니 담기</button>
                 <button id="wishToggle" data-id="<?php echo $product['Product_Id']; ?>">
                 찜하기
                 </button>
