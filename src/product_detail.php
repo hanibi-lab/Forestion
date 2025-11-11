@@ -7,11 +7,26 @@ include "db_conn.php";
 require "./header.php";
 
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+
+// 상품 정보 가져오기
 $stmt = $conn->prepare("SELECT * FROM Product_PD WHERE Product_Id = ?");
 $stmt->bind_param("i",$id);
 $stmt->execute();
 $product = $stmt->get_result()->fetch_assoc();
 if(!$product){ echo "상품 없음"; exit;}
+
+// 현재 로그인한 유저의 찜 여부 확인
+$is_wished = false;
+if (isset($_SESSION['User_Id'])) {
+  $uid = $_SESSION['User_Id'];
+  $check = $conn->prepare("SELECT * FROM Favorite_FL WHERE Favorite_UR_Id = ? AND Favorite_PD_Id = ?");
+  $check->bind_param("si", $uid, $id);
+  $check->execute();
+  $result = $check->get_result();
+  if ($result->num_rows > 0) {
+    $is_wished = true;
+  }
+}
 ?>
 
 <!-- 외부 CSS 연결 -->
@@ -44,9 +59,19 @@ if(!$product){ echo "상품 없음"; exit;}
 			          <input type="number" name="qty" value="1" min="1" max="<?php echo $product['Product_Count']; ?>">
 			          <!-- <button type="submit" class="cart-btn">장바구니 담기</button> -->
                 <button type="button" id="addCartBtn" class="cart-btn">장바구니 담기</button>
-			          <button type="button" id="wishToggle" data-id="<?php echo $product['Product_Id']; ?>" class="wish-btn">
+			          <!-- <button type="button" id="wishToggle" data-id="<?php echo $product['Product_Id']; ?>" class="wish-btn">
 			          찜하기
-			        </button>
+			        </button> -->
+                <!-- 변경 -->
+                <!-- <div class="wish-btn"> -->
+                <img 
+                    src="<?php echo $is_wished ? 'image/wish_on(2).png' : 'image/wish_off(2).png'; ?>" 
+                  alt="찜하기" 
+                  id="wishToggle" 
+                  data-id="<?php echo $product['Product_Id']; ?>" 
+                  class="wish-img"
+                >
+                
 			        </form>
 
               <script>
@@ -202,16 +227,27 @@ if(!$product){ echo "상품 없음"; exit;}
 </main>
 
 <script>
-// 찜 토글 기능
+// 찜 토글 기능 (이미지 변경 추가)
 document.getElementById('wishToggle').addEventListener('click', async function(){
+  const img = this;
   const id = this.dataset.id;
   const res = await fetch('favorite_toggle.php', {
     method:'POST',
     headers:{'Content-Type':'application/json'},
     body: JSON.stringify({product_id: id})
   });
-  const j = await res.json();
-  alert(j.message);
+  // const j = await res.json();
+  // alert(j.message);
+
+  const data = await res.json();
+  alert(data.message);
+
+  // 상태 변경 (찜 됨 / 찜 해제)
+  if (data.status === 'added') {
+    img.src = 'image/wish_on(2).png'; // 찜한 상태
+  } else if (data.status === 'removed') {
+    img.src = 'image/wish_off(2).png'; // 찜 해제 상태
+  }
 });
 </script>
 

@@ -29,7 +29,7 @@ body {
 
 /*공통 padding-top*/
 main, .cart-main, .mypage-main, .product-detail, .container 
-, .ODdetil-container, .myreviews-main {
+, .ODdetil-container, .myreviews-main, .main2 {
   padding-top: 90px;
 }
 
@@ -407,6 +407,91 @@ main {
     font-size: 0.9rem;
     color: #555;
 }
+
+/* -------------------- main2.php ------------------- */
+/* main2.php 전용 스타일 */
+.main2 {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.category-title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.divider {
+  border: none;
+  border-top: 2px solid #ddd;
+  margin-bottom: 20px;
+}
+
+/* 필터 + 정렬 영역 */
+.filter-sort {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.filter-sort select {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 15px;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+/* 상품 리스트 */
+.products {
+  width: 100%;
+}
+
+.prdList {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  padding: 0;
+}
+
+.prdList__item {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  overflow: hidden;
+  transition: transform 0.2s ease;
+}
+
+.prdList__item:hover {
+  transform: translateY(-5px);
+}
+
+.thumbnail img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.description {
+  padding: 10px;
+  text-align: center;
+}
+
+.description .name {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.description .spec {
+  color: #555;
+}
+
 /* -------------------  product_detail.php   ----------------- */
 /*  상품 상세 정보  */
 /* 메인 레이아웃 */
@@ -494,23 +579,32 @@ main {
   border: 1px solid #000000;
   background-color: #ffffff; 
 } 
-  
- /* 찜 버튼 */ 
-/* .wish-btn { 
-  background-color: #fff; 
-  color: #000; 
-  border: 1px solid #bbb; 
-  border-radius: 5px; 
-  padding: 8px 15px; 
-  cursor: pointer; 
-  transition: 0.2s; 
-} 
-   
-.wish-btn:hover { 
-  border: 1px solid #000000; 
-  background-color: #ffffff; 
+
+.wish-img {
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
 }
-  */
+
+.wish-img:hover {
+  transform: scale(1.1);
+  opacity: 0.8;
+}
+
+/*home과 main2의 찜 이미지*/
+.wish-meta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 5px;
+}
+
+.wish-meta p {
+  margin: 0;
+  text-align: center;
+}
 
 /* 탭 메뉴 */
 .tabProduct {

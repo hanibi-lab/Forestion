@@ -80,12 +80,22 @@ if(isset($_SESSION['User_Id']) && isset($_SESSION['User_Name'])){
                     <p>₩<?php echo number_format($row['Product_Price']); ?></p> 
                 </div>
                 <!-- 사이즈, 재고 -->
+                <div class="wish-meta">
                 <p>사이즈: <?php echo $row['Product_Size']; ?> / 재고: <?php echo $row['Product_Count']; ?></p>
+                            <img 
+                    src="image/wish_off(2).png" 
+                    alt="찜하기" 
+                    class="wish-img" 
+                    data-id="<?php echo $row['Product_Id']; ?>"
+                    onclick="toggleWish(this)"
+                >
+                </div>
                 
                 <!-- 장바구니, 찜하기 버튼만 추가 -->
-                <button id="wishToggle" data-id="<?php echo $product['Product_Id']; ?>">
+                <!-- <button id="wishToggle" data-id="<?php echo $product['Product_Id']; ?>">
                 찜하기
-                </button>
+                </button> -->
+
             </div>
         </li>
         <?php endwhile; $conn->close(); ?>
@@ -115,6 +125,29 @@ prev.addEventListener('click', ()=>showSlide(index-1));
 next.addEventListener('click', ()=>showSlide(index+1));
 </script>
 
+<script>
+// 찜 토글 기능
+async function toggleWish(imgElement) {
+  const id = imgElement.dataset.id;
+
+  const res = await fetch('favorite_toggle.php', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({ product_id: id })
+  });
+
+  const data = await res.json();
+  alert(data.message);
+
+  if (data.status === 'added') {
+    imgElement.src = 'image/wish_on(2).png'; // 찜 O
+  } else if (data.status === 'removed') {
+    imgElement.src = 'image/wish_off(2).png'; // 찜 X
+  }
+}
+</script>
+
+</script>
 </body>
 </html>
 

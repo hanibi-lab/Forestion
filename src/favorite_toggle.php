@@ -12,15 +12,20 @@ $uid = $conn->real_escape_string($_SESSION['User_Id']);
 $check = $conn->prepare("SELECT * FROM Favorite_FL WHERE Favorite_UR_Id = ? AND Favorite_PD_Id = ?");
 $check->bind_param("si",$uid,$pid);
 $check->execute();
-if($check->get_result()->num_rows > 0){
-    // 삭제
+$result = $check->get_result();
+
+// if($check->get_result()->num_rows > 0){
+if($result->num_rows > 0){
+     // 이미 찜되어 있으면 -> 삭제
     $del = $conn->prepare("DELETE FROM Favorite_FL WHERE Favorite_UR_Id = ? AND Favorite_PD_Id = ?");
     $del->bind_param("si",$uid,$pid);
     $del->execute();
-    echo json_encode(['ok'=>true,'message'=>'찜 해제됨']);
+    // echo json_encode(['ok'=>true,'message'=>'찜 해제됨']);
+    echo json_encode(['status' => 'removed', 'message' => '찜이 해제되었습니다.']);
 } else {
     $ins = $conn->prepare("INSERT INTO Favorite_FL (Favorite_UR_Id, Favorite_PD_Id, Favorite_Date) VALUES (?, ?, NOW())");
     $ins->bind_param("si",$uid,$pid);
     $ins->execute();
-    echo json_encode(['ok'=>true,'message'=>'찜 추가됨']);
+    // echo json_encode(['ok'=>true,'message'=>'찜 추가됨']);
+    echo json_encode(['status' => 'added', 'message' => '찜 목록에 추가되었습니다.']);
 }

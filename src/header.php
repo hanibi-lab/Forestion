@@ -30,11 +30,19 @@ if (session_status() === PHP_SESSION_NONE) {
       </div>
 
       <!-- 카테고리 메뉴 -->
-      <nav class="nav-categories">
+      <!-- <nav class="nav-categories">
         <a href="main2.php?tag=plants">식물</a>
         <a href="main2.php?tag=seed">씨앗</a>
         <a href="main2.php?tag=tool">도구</a>
         <a href="main2.php?tag=etc">기타</a>
+      </nav> -->
+      
+      <!-- 카테고리 메뉴 -->
+      <nav class="nav-categories">
+        <a href="main2.php?tag=1">식물</a>
+        <a href="main2.php?tag=2">씨앗</a>
+        <a href="main2.php?tag=3">도구</a>
+        <a href="main2.php?tag=4">기타</a>
       </nav>
 
       <div class="nav-icons"> 
