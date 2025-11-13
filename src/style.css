@@ -1286,8 +1286,8 @@ section input, section select {
     width: calc(100% - 60px); /* 좌우 여백 20px씩 */
 }
 .footer-logo {
-    width: 40px;   /* 로고 크기 조절 */
-    height: auto;  /* 비율 유지 */
+    width: 100px;   /* 로고 크기 조절 */
+    height: 100px;  /* 비율 유지 */
 }
 body {    /* 푸터 화면 하단에 두기 */
     display: flex;

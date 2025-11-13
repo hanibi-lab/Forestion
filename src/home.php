@@ -19,8 +19,6 @@ if(isset($_SESSION['User_Id']) && isset($_SESSION['User_Name'])){
 <?php require "./header.php"; ?> <!-- 헤더: 로고, 카테고리, 로그인/마이페이지 -->
 
 <main>
- <!-- <h1>Hello, <?php echo $_SESSION['User_Name']; ?></h1>
-    <a href="logout.php">Logout</a> -->
 <?php
 }else{
     header("Location: index.php");
@@ -31,71 +29,74 @@ if(isset($_SESSION['User_Id']) && isset($_SESSION['User_Name'])){
 <!-- 슬라이더 영역 -->
 <section class="slider">
     <div class="slides">
-        <!-- 여기서는 임시 이미지. DB 불러오려면 SELECT문 써서 불러올 수 있음 -->
         <img src="image/banner1.png" alt="배너1">
         <img src="images/banner2.jpg" alt="배너2">
         <img src="images/banner3.jpg" alt="배너3">
     </div>
-    <button class="arrow left">&#10094;</button> <!-- 이전 배너 버튼 -->
-    <button class="arrow right">&#10095;</button> <!-- 다음 배너 버튼 -->
+    <button class="arrow left">&#10094;</button>
+    <button class="arrow right">&#10095;</button>
 </section>
 
 <!-- 상품 리스트 영역 -->
 <section class="products">
     <ul class="prdList">
         <?php
-        // DB에서 상품 정보 8개 가져오기
-        $result = $conn->query("SELECT * FROM Product_PD LIMIT 8");
+        // ⭐ 변경됨 : 사이즈를 묶어서 가져오는 JOIN 쿼리로 변경
+        $result = $conn->query("
+            SELECT 
+                p.*,
+                GROUP_CONCAT(s.Size_Name ORDER BY s.Size_Id SEPARATOR '/') AS Sizes
+            FROM Product_PD p
+            LEFT JOIN Product_Size ps ON p.Product_Id = ps.Product_Id
+            LEFT JOIN Size s ON ps.Size_Id = s.Size_Id
+            GROUP BY p.Product_Id
+            LIMIT 8
+        ");
+
         while($row = $result->fetch_assoc()):
         ?> 
         <li class="prdList__item">
             <div class="thumbnail">
-                <!-- 상품 상세 페이지 링크 / 상품 클릭하면 product_detail.php?id=상품ID 로 이동 -->
                 <a href="product_detail.php?id=<?php echo $row['Product_Id']; ?>">
-                      <img src="<?php echo $row['Product_Image']; ?>" 
-			                 alt="<?php echo $row['Product_Name']; ?>">
+                    <img src="<?php echo $row['Product_Image']; ?>" 
+                        alt="<?php echo $row['Product_Name']; ?>">
                 </a>
-                <!-- 장바구니 기능 줄 옮김 
-                <div class="icon__box">
-                    <span class="cart">
-                        ADD  장바구니 버튼, 추후 JS/PHP 연동 필요
-                    </span>
-                </div>
-                -->
             </div>
+
             <div class="description">
                 <div class="name">
                     <a href="product_detail.php?id=<?php echo $row['Product_Id']; ?>">
-                        <?php echo $row['Product_Name']; ?> <!-- 상품명 -->
+                        <?php echo $row['Product_Name']; ?>
                     </a>
                 </div>
-                <!-- ul을 div로 변경 
-                <ul class="spec">
-                   가격 
-                    <li>₩<?php echo number_format($row['Product_Price']); ?></li> 
-                </ul>
-                -->
+
                 <div class="spec">
-                  <!-- 가격 -->
+                    <!-- 가격 -->
                     <p>₩<?php echo number_format($row['Product_Price']); ?></p> 
                 </div>
-                <!-- 사이즈, 재고 -->
-                <div class="wish-meta">
-                <p>사이즈: <?php echo $row['Product_Size']; ?> / 재고: <?php echo $row['Product_Count']; ?></p>
-                            <img 
-                    src="image/wish_off(2).png" 
-                    alt="찜하기" 
-                    class="wish-img" 
-                    data-id="<?php echo $row['Product_Id']; ?>"
-                    onclick="toggleWish(this)"
-                >
-                </div>
-                
-                <!-- 장바구니, 찜하기 버튼만 추가 -->
-                <!-- <button id="wishToggle" data-id="<?php echo $product['Product_Id']; ?>">
-                찜하기
-                </button> -->
 
+                <!-- 사이즈 + 재고 -->
+                <div class="wish-meta">
+
+                    <!-- ⭐ 변경됨: 사이즈가 묶여서 출력됨 -->
+                    <p>
+                        사이즈:
+                        <?php 
+                            echo $row['Sizes'] 
+                                ? htmlspecialchars($row['Sizes']) 
+                                : "없음"; 
+                        ?>
+                        / 재고: <?php echo htmlspecialchars($row['Product_Count']); ?>
+                    </p>
+
+                    <img 
+                        src="image/wish_off(2).png" 
+                        alt="찜하기" 
+                        class="wish-img" 
+                        data-id="<?php echo $row['Product_Id']; ?>"
+                        onclick="toggleWish(this)"
+                    >
+                </div>
             </div>
         </li>
         <?php endwhile; $conn->close(); ?>
@@ -104,7 +105,7 @@ if(isset($_SESSION['User_Id']) && isset($_SESSION['User_Name'])){
 
 </main>
 
-<?php require "./footer.php"; ?> <!-- 푸터 -->
+<?php require "./footer.php"; ?>
 
 <!-- 슬라이더 JS 기능 -->
 <script>
@@ -140,15 +141,12 @@ async function toggleWish(imgElement) {
   alert(data.message);
 
   if (data.status === 'added') {
-    imgElement.src = 'image/wish_on(2).png'; // 찜 O
+    imgElement.src = 'image/wish_on(2).png';
   } else if (data.status === 'removed') {
-    imgElement.src = 'image/wish_off(2).png'; // 찜 X
+    imgElement.src = 'image/wish_off(2).png';
   }
 }
 </script>
 
-</script>
 </body>
 </html>
-
-

@@ -10,14 +10,12 @@ $uid = $_SESSION['User_Id'];
 if(isset($_GET['remove'])){
     $rid = (int)$_GET['remove'];
     $del = $conn->prepare("DELETE FROM Cart_CT WHERE Cart_Id = ? AND Cart_UR_Id = ?");
-    $del->bind_param("is",$rid,$uid); $del->execute();
+    $del->bind_param("is",$rid,$uid); 
+    $del->execute();
     header("Location: cart.php"); exit;
 }
 
-// 장바구니 불러오기
-// $stmt = $conn->prepare("SELECT c.Cart_Id, p.* FROM Cart_CT c JOIN Product_PD p ON c.Cart_PD_Id = p.Product_Id WHERE c.Cart_UR_Id = ?");
-
-// 변경(추가) ⭐ 사이즈 JOIN 추가됨
+// ⭐ 사이즈 LEFT JOIN 추가됨
 $stmt = $conn->prepare("
     SELECT 
         c.Cart_Id, 
@@ -30,28 +28,13 @@ $stmt = $conn->prepare("
         s.Size_Name   
     FROM Cart_CT c 
     JOIN Product_PD p ON c.Cart_PD_Id = p.Product_Id 
-    JOIN Size s ON c.Size_Id = s.Size_Id   
+    LEFT JOIN Size s ON c.Size_Id = s.Size_Id   
     WHERE c.Cart_UR_Id = ?
 ");
 $stmt->bind_param("s",$uid);
 $stmt->execute();
 $res = $stmt->get_result();
 ?>
-<!-- <main style="margin-top:100px;">
-  <h2>장바구니</h2>
-  <table>
-    <tr><th>상품</th><th>가격</th><th>액션</th></tr>
-    //
-    </?php while($r = $res->fetch_assoc()): ?>
-      <tr>
-        <td><img src="</?php echo $r['Product_Image']; ?>" style="width:80px;"> </?php echo $r['Product_Name']; ?></td>
-        <td>₩</?php echo number_format($r['Product_Price']); ?></td>
-        <td><a href="cart.php?remove=</?php echo $r['Cart_Id']; ?>">삭제</a></td>
-      </tr>
-    </?php endwhile; ?>
-  </table>
-  <a href="checkout.php">결제하기</a>
-</main> -->
 
 <!-- 여기 부분 새로 추가 -->
 <main class="cart-main">
@@ -68,17 +51,17 @@ $res = $stmt->get_result();
               <a href="product_detail.php?id=<?= $r['Product_Id'] ?>">
                 <img src="<?= htmlspecialchars($r['Product_Image']) ?>" alt="<?= htmlspecialchars($r['Product_Name']) ?>">
               </a>
-              <!-- <a href="product_detail.php?id=</?= $r['Product_Id'] ?>"> -->
-                <p>상품명: <?= htmlspecialchars($r['Product_Name']) ?></p>
 
-                <!-- ⭐ 사이즈 표시 추가 -->
-                <p>사이즈: <b><?= htmlspecialchars($r['Size_Name']) ?></b></p>
+              <p>상품명: <?= htmlspecialchars($r['Product_Name']) ?></p>
 
-              </a>
+              <!-- ⭐ 사이즈 표시 (null이면 없음) -->
+              <p>사이즈: 
+                <b><?= $r['Size_Name'] ? htmlspecialchars($r['Size_Name']) : "없음" ?></b>
+              </p>
+
             </div>
             
             <div class="cart-right">
-              <!-- <span class="price">가격: </?= number_format($r['Product_Price']) ?>원</span> -->
               <p>수량: <?= $r['Cart_Quantity'] ?>개</p>
               <span class="price">가격: <?= number_format($r['Product_Price'] * $r['Cart_Quantity']) ?>원</span>
               <a href="cart.php?remove=<?= $r['Cart_Id'] ?>" class="delete-btn">삭제</a>

@@ -12,7 +12,7 @@ if (!isset($_SESSION['User_Id'])) {
     exit;
 }
 
-$uid = $_SESSION['User_Id'];
+$uid = $_SESSION['User_Id'];   // 문자열(varchar)
 
 // POST 요청 확인
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     $pid  = (int)$_POST['product_id'];   // 상품 ID
-    $size = (int)$_POST['size_id'];      // ⭐ 추가된 사이즈 ID
+    $size = (int)$_POST['size_id'];      // 선택한 사이즈 ID
     $qty  = isset($_POST['qty']) ? max(1, (int)$_POST['qty']) : 1;
 
     // 1️⃣ 상품 존재 및 재고 확인
@@ -47,11 +47,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // 2️⃣ 같은 상품 + 같은 사이즈가 장바구니에 있는지 확인
     $checkCart = $conn->prepare("
-        SELECT Cart_Id, Cart_Quantity 
-        FROM Cart_CT 
+        SELECT Cart_Id, Cart_Quantity
+        FROM Cart_CT
         WHERE Cart_UR_Id = ? AND Cart_PD_Id = ? AND Size_Id = ?
     ");
-    $checkCart->bind_param("iii", $uid, $pid, $size);
+    // ★ 문자열(s), 숫자(i), 숫자(i)
+    $checkCart->bind_param("sii", $uid, $pid, $size);
     $checkCart->execute();
     $exist = $checkCart->get_result()->fetch_assoc();
 
@@ -60,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $newQty = $exist['Cart_Quantity'] + $qty;
 
         if ($newQty > $stock) {
-            echo json_encode(["message" => "최대 재고(".$stock."개) 이상 담을 수 없습니다."]);
+            echo json_encode(["message" => "최대 재고(" . $stock . "개) 이상 담을 수 없습니다."]);
             exit;
         }
 
@@ -77,11 +78,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         INSERT INTO Cart_CT (Cart_UR_Id, Cart_PD_Id, Size_Id, Cart_Quantity)
         VALUES (?, ?, ?, ?)
     ");
-    $insert->bind_param("iiii", $uid, $pid, $size, $qty);
+    // ★ 문자열(s), 숫자(i), 숫자(i), 숫자(i)
+    $insert->bind_param("siii", $uid, $pid, $size, $qty);
     $insert->execute();
 
     echo json_encode(["message" => "장바구니에 담겼습니다."]);
     exit;
 }
 ?>
-
