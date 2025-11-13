@@ -1,24 +1,33 @@
-
-
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 session_start();
 include "db_conn.php";
 
-header('Content-Type: application/json; charset=utf-8'); // ✅ AJAX 응답용
+header('Content-Type: application/json; charset=utf-8'); // AJAX 응답용
 
+// 로그인 체크
 if (!isset($_SESSION['User_Id'])) {
     echo json_encode(["message" => "로그인이 필요합니다."]);
     exit;
 }
+
 $uid = $_SESSION['User_Id'];
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['product_id'])) {
-    $pid = (int)$_POST['product_id'];
-    $qty = isset($_POST['qty']) ? max(1, (int)$_POST['qty']) : 1;
+// POST 요청 확인
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    // ✅ 1. 상품 재고 확인
+    // 필수 값 체크
+    if (!isset($_POST['product_id']) || !isset($_POST['size_id'])) {
+        echo json_encode(["message" => "요청값이 부족합니다."]);
+        exit;
+    }
+
+    $pid  = (int)$_POST['product_id'];   // 상품 ID
+    $size = (int)$_POST['size_id'];      // ⭐ 추가된 사이즈 ID
+    $qty  = isset($_POST['qty']) ? max(1, (int)$_POST['qty']) : 1;
+
+    // 1️⃣ 상품 존재 및 재고 확인
     $checkStock = $conn->prepare("SELECT Product_Count FROM Product_PD WHERE Product_Id = ?");
     $checkStock->bind_param("i", $pid);
     $checkStock->execute();
@@ -31,39 +40,48 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['product_id'])) {
 
     $stock = (int)$stockRow['Product_Count'];
 
-    // ✅ 2. 장바구니에 같은 상품이 이미 있는지 확인
-    $checkCart = $conn->prepare("SELECT Cart_Id, Cart_Quantity FROM Cart_CT WHERE Cart_UR_Id = ? AND Cart_PD_Id = ?");
-    $checkCart->bind_param("si", $uid, $pid);
-    $checkCart->execute();
-    $cartRow = $checkCart->get_result()->fetch_assoc();
+    if ($stock <= 0) {
+        echo json_encode(["message" => "재고가 부족합니다."]);
+        exit;
+    }
 
-    if ($cartRow) {
-        $newQty = $cartRow['Cart_Quantity'] + $qty;
+    // 2️⃣ 같은 상품 + 같은 사이즈가 장바구니에 있는지 확인
+    $checkCart = $conn->prepare("
+        SELECT Cart_Id, Cart_Quantity 
+        FROM Cart_CT 
+        WHERE Cart_UR_Id = ? AND Cart_PD_Id = ? AND Size_Id = ?
+    ");
+    $checkCart->bind_param("iii", $uid, $pid, $size);
+    $checkCart->execute();
+    $exist = $checkCart->get_result()->fetch_assoc();
+
+    if ($exist) {
+        // 이미 있을 경우 수량 증가
+        $newQty = $exist['Cart_Quantity'] + $qty;
 
         if ($newQty > $stock) {
-            echo json_encode(["message" => "이미 최대 재고 수량(" . $stock . "개)까지 담았습니다."]);
+            echo json_encode(["message" => "최대 재고(".$stock."개) 이상 담을 수 없습니다."]);
             exit;
         }
 
         $update = $conn->prepare("UPDATE Cart_CT SET Cart_Quantity = ? WHERE Cart_Id = ?");
-        $update->bind_param("ii", $newQty, $cartRow['Cart_Id']);
+        $update->bind_param("ii", $newQty, $exist['Cart_Id']);
         $update->execute();
 
-        echo json_encode(["message" => "상품 수량이 업데이트되었습니다."]);
-        exit;
-    } else {
-        // ✅ 새로 담기
-        if ($stock <= 0) {
-            echo json_encode(["message" => "재고가 없습니다."]);
-            exit;
-        }
-
-        $insert = $conn->prepare("INSERT INTO Cart_CT (Cart_UR_Id, Cart_PD_Id, Cart_Quantity) VALUES (?, ?, ?)");
-        $insert->bind_param("sii", $uid, $pid, $qty);
-        $insert->execute();
-
-        echo json_encode(["message" => "상품이 장바구니에 담겼습니다."]);
+        echo json_encode(["message" => "장바구니 수량이 업데이트되었습니다."]);
         exit;
     }
+
+    // 3️⃣ 새 장바구니 추가
+    $insert = $conn->prepare("
+        INSERT INTO Cart_CT (Cart_UR_Id, Cart_PD_Id, Size_Id, Cart_Quantity)
+        VALUES (?, ?, ?, ?)
+    ");
+    $insert->bind_param("iiii", $uid, $pid, $size, $qty);
+    $insert->execute();
+
+    echo json_encode(["message" => "장바구니에 담겼습니다."]);
+    exit;
 }
 ?>
+

@@ -1,4 +1,3 @@
-
 <?php
 // cart.php
 error_reporting(E_ALL); ini_set('display_errors',1);
@@ -17,11 +16,21 @@ if(isset($_GET['remove'])){
 
 // 장바구니 불러오기
 // $stmt = $conn->prepare("SELECT c.Cart_Id, p.* FROM Cart_CT c JOIN Product_PD p ON c.Cart_PD_Id = p.Product_Id WHERE c.Cart_UR_Id = ?");
-//변경(추가)
+
+// 변경(추가) ⭐ 사이즈 JOIN 추가됨
 $stmt = $conn->prepare("
-    SELECT c.Cart_Id, c.Cart_Quantity, p.Product_Id, p.Product_Name, p.Product_Price, p.Product_Image, p.Product_Count
+    SELECT 
+        c.Cart_Id, 
+        c.Cart_Quantity, 
+        p.Product_Id, 
+        p.Product_Name, 
+        p.Product_Price, 
+        p.Product_Image, 
+        p.Product_Count,
+        s.Size_Name   
     FROM Cart_CT c 
     JOIN Product_PD p ON c.Cart_PD_Id = p.Product_Id 
+    JOIN Size s ON c.Size_Id = s.Size_Id   
     WHERE c.Cart_UR_Id = ?
 ");
 $stmt->bind_param("s",$uid);
@@ -61,6 +70,10 @@ $res = $stmt->get_result();
               </a>
               <!-- <a href="product_detail.php?id=</?= $r['Product_Id'] ?>"> -->
                 <p>상품명: <?= htmlspecialchars($r['Product_Name']) ?></p>
+
+                <!-- ⭐ 사이즈 표시 추가 -->
+                <p>사이즈: <b><?= htmlspecialchars($r['Size_Name']) ?></b></p>
+
               </a>
             </div>
             
