@@ -42,17 +42,49 @@ if(isset($_SESSION['User_Id']) && isset($_SESSION['User_Name'])){
     <ul class="prdList">
         <?php
         // ⭐ 변경됨 : 사이즈를 묶어서 가져오는 JOIN 쿼리로 변경
-        $result = $conn->query("
-            SELECT 
-                p.*,
-                GROUP_CONCAT(s.Size_Name ORDER BY s.Size_Id SEPARATOR '/') AS Sizes
-            FROM Product_PD p
-            LEFT JOIN Product_Size ps ON p.Product_Id = ps.Product_Id
-            LEFT JOIN Size s ON ps.Size_Id = s.Size_Id
-            GROUP BY p.Product_Id
-            LIMIT 8
-        ");
+        // $result = $conn->query("
+        //     SELECT 
+        //         p.*,
+        //         GROUP_CONCAT(s.Size_Name ORDER BY s.Size_Id SEPARATOR '/') AS Sizes
+        //     FROM Product_PD p
+        //     LEFT JOIN Product_Size ps ON p.Product_Id = ps.Product_Id
+        //     LEFT JOIN Size s ON ps.Size_Id = s.Size_Id
+        //     GROUP BY p.Product_Id
+        //     LIMIT 8
+        // ");
+        
+        // ⭐ 변경됨 : 찜 여부 포함한 JOIN 쿼리로 변경
+        $uid = isset($_SESSION['User_Id']) ? $_SESSION['User_Id'] : null;
 
+        if ($uid) {
+            $result = $conn->query("
+                SELECT 
+                    p.*,
+                    GROUP_CONCAT(s.Size_Name ORDER BY s.Size_Id SEPARATOR '/') AS Sizes,
+                    CASE WHEN f.Favorite_PD_Id IS NOT NULL THEN 1 ELSE 0 END AS is_wished
+                FROM Product_PD p
+                LEFT JOIN Product_Size ps ON p.Product_Id = ps.Product_Id
+                LEFT JOIN Size s ON ps.Size_Id = s.Size_Id
+                LEFT JOIN Favorite_FL f 
+                    ON p.Product_Id = f.Favorite_PD_Id 
+                AND f.Favorite_UR_Id = '$uid'
+                GROUP BY p.Product_Id
+                LIMIT 8
+            ");
+        } else {
+            $result = $conn->query("
+                SELECT 
+                    p.*,
+                    GROUP_CONCAT(s.Size_Name ORDER BY s.Size_Id SEPARATOR '/') AS Sizes,
+                    0 AS is_wished
+                FROM Product_PD p
+                LEFT JOIN Product_Size ps ON p.Product_Id = ps.Product_Id
+                LEFT JOIN Size s ON ps.Size_Id = s.Size_Id
+                GROUP BY p.Product_Id
+                LIMIT 8
+            ");
+        }
+        
         while($row = $result->fetch_assoc()):
         ?> 
         <li class="prdList__item">
@@ -90,7 +122,7 @@ if(isset($_SESSION['User_Id']) && isset($_SESSION['User_Name'])){
                     </p>
 
                     <img 
-                        src="image/wish_off(2).png" 
+                        src="<?php echo $row['is_wished'] ? 'image/wish_on(2).png' : 'image/wish_off(2).png'; ?>"
                         alt="찜하기" 
                         class="wish-img" 
                         data-id="<?php echo $row['Product_Id']; ?>"

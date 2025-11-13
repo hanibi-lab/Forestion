@@ -3,6 +3,11 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 session_start();
+//아이디 확인
+if (!isset($_SESSION['User_Id'])) {
+    header("Location: index.php");
+    exit();
+}
 include "db_conn.php";
 require "./header.php";
 ?>
@@ -23,31 +28,56 @@ if ($categoryId > 0) {
 }
 
 // 🟢 상품 목록 불러오기 (JOIN + GROUP_CONCAT)
+// if ($categoryId > 0) {
+//     $sql = "
+//         SELECT 
+//             p.*,
+//             GROUP_CONCAT(s.Size_Name ORDER BY s.Size_Id SEPARATOR '/') AS Sizes
+//         FROM Product_PD p
+//         LEFT JOIN Product_Size ps ON p.Product_Id = ps.Product_Id
+//         LEFT JOIN Size s ON ps.Size_Id = s.Size_Id
+//         WHERE p.Product_Category = $categoryId
+//         GROUP BY p.Product_Id
+//         LIMIT 100
+//     ";
+// } else {
+//     $sql = "
+//         SELECT 
+//             p.*,
+//             GROUP_CONCAT(s.Size_Name ORDER BY s.Size_Id SEPARATOR '/') AS Sizes
+//         FROM Product_PD p
+//         LEFT JOIN Product_Size ps ON p.Product_Id = ps.Product_Id
+//         LEFT JOIN Size s ON ps.Size_Id = s.Size_Id
+//         GROUP BY p.Product_Id
+//         LIMIT 100
+//     ";
+// }
+// $result = $conn->query($sql);
+
+$uid = isset($_SESSION['User_Id']) ? $_SESSION['User_Id'] : null;
+$categoryId = isset($_GET['tag']) ? (int)$_GET['tag'] : 0;
+
+// 🟢 상품 목록 불러오기 (JOIN + 찜 상태)
+$baseQuery = "
+    SELECT 
+        p.*,
+        GROUP_CONCAT(s.Size_Name ORDER BY s.Size_Id SEPARATOR '/') AS Sizes,
+        CASE WHEN f.Favorite_PD_Id IS NOT NULL THEN 1 ELSE 0 END AS is_wished
+    FROM Product_PD p
+    LEFT JOIN Product_Size ps ON p.Product_Id = ps.Product_Id
+    LEFT JOIN Size s ON ps.Size_Id = s.Size_Id
+    LEFT JOIN Favorite_FL f 
+        ON p.Product_Id = f.Favorite_PD_Id
+       AND f.Favorite_UR_Id = '$uid'
+";
+
 if ($categoryId > 0) {
-    $sql = "
-        SELECT 
-            p.*,
-            GROUP_CONCAT(s.Size_Name ORDER BY s.Size_Id SEPARATOR '/') AS Sizes
-        FROM Product_PD p
-        LEFT JOIN Product_Size ps ON p.Product_Id = ps.Product_Id
-        LEFT JOIN Size s ON ps.Size_Id = s.Size_Id
-        WHERE p.Product_Category = $categoryId
-        GROUP BY p.Product_Id
-        LIMIT 100
-    ";
-} else {
-    $sql = "
-        SELECT 
-            p.*,
-            GROUP_CONCAT(s.Size_Name ORDER BY s.Size_Id SEPARATOR '/') AS Sizes
-        FROM Product_PD p
-        LEFT JOIN Product_Size ps ON p.Product_Id = ps.Product_Id
-        LEFT JOIN Size s ON ps.Size_Id = s.Size_Id
-        GROUP BY p.Product_Id
-        LIMIT 100
-    ";
+    $baseQuery .= " WHERE p.Product_Category = $categoryId";
 }
-$result = $conn->query($sql);
+
+$baseQuery .= " GROUP BY p.Product_Id LIMIT 100";
+$result = $conn->query($baseQuery);
+
 ?>
 
   <!-- 카테고리 제목 -->
@@ -121,7 +151,7 @@ $result = $conn->query($sql);
 
               <!-- 찜 이미지 -->
               <img 
-                src="image/wish_off(2).png"
+                src="<?php echo $row['is_wished'] ? 'image/wish_on(2).png' : 'image/wish_off(2).png'; ?>"
                 alt="찜하기"
                 class="wish-img"
                 data-id="<?php echo $row['Product_Id']; ?>"
