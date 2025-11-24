@@ -15,9 +15,9 @@ if (empty($selected)) {
 }
 
 $in = implode(',', array_fill(0, count($selected), '?'));
-// $stmt = $conn->prepare("SELECT c.Cart_Id, p.Product_Name, p.Product_Price, p.Product_Image 
-//c.Cart_Quantity, p.Product_Id 추가
-$stmt = $conn->prepare("SELECT c.Cart_Id, c.Cart_Quantity, p.Product_Id,p.Product_Name, p.Product_Price, p.Product_Image 
+// $stmt = $conn->prepare("SELECT c.Cart_Id, c.Cart_Quantity, p.Product_Id,p.Product_Name, p.Product_Price, p.Product_Image 
+//  c.Size_Id 추가
+$stmt = $conn->prepare("SELECT c.Cart_Id, c.Cart_Quantity, c.Size_Id, p.Product_Id,p.Product_Name, p.Product_Price, p.Product_Image 
   FROM Cart_CT c 
   JOIN Product_PD p ON c.Cart_PD_Id = p.Product_Id 
   WHERE c.Cart_Id IN ($in) AND c.Cart_UR_Id = ?");
@@ -67,6 +67,7 @@ $total = 0;
           <input type="hidden" name="product_id[]" value="<?= $r['Product_Id'] ?>">
           <input type="hidden" name="quantity[]" value="<?= $r['Cart_Quantity'] ?>">
           <input type="hidden" name="price[]" value="<?= $r['Product_Price'] ?>">
+          <input type="hidden" name="size_id[]" value="<?= $r['Size_Id'] ?>">
         </div>
       <?php endwhile; ?>
       <div class="total-price">총 상품 금액: <strong>₩<?= number_format($total) ?></strong></div>

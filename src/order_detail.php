@@ -24,6 +24,7 @@ include "db_conn.php";
 require "./header.php";
 
 $order_num = $_GET['num'] ?? '';
+// $order_num = $_GET['order_num'] ?? '';
 $uid = $_SESSION['User_Id'];
 
 if (!$order_num || !is_numeric($order_num)) {
@@ -49,11 +50,24 @@ if (!$order) {
 }
 
 // 상품 목록
+
+// $stmt = $conn->prepare("
+//   SELECT d.Product_Id, d.Quantity, d.UnitPrice,
+//   d.Size_Id, s.Size_Name, //새로 추가됨
+//   p.Product_Name, p.Product_Image
+//   FROM OrderDetail_OD d
+//   JOIN Product_PD p ON d.Product_Id = p.Product_Id
+//   WHERE d.Order_Num = ?
+// ");
+
 $stmt = $conn->prepare("
-  SELECT d.Product_Id, d.Quantity, d.UnitPrice, p.Product_Name, p.Product_Image
-  FROM OrderDetail_OD d
-  JOIN Product_PD p ON d.Product_Id = p.Product_Id
-  WHERE d.Order_Num = ?
+SELECT d.Product_Id, d.Quantity, d.UnitPrice, 
+       d.Size_Id, s.Size_Name,
+       p.Product_Name, p.Product_Image
+FROM OrderDetail_OD d
+JOIN Product_PD p ON d.Product_Id = p.Product_Id
+LEFT JOIN Size s ON d.Size_Id = s.Size_Id
+WHERE d.Order_Num = ?
 ");
 $stmt->bind_param("i", $order_num);
 $stmt->execute();
@@ -89,6 +103,11 @@ $details = $stmt->get_result();
         <div class="order-info">
           <p><?= htmlspecialchars($row['Product_Name']) ?></p>
           <span>수량: <?= $row['Quantity'] ?>개</span>
+          <?php if ($row['Size_Id'] != 0): ?>
+              <span>사이즈: <?= htmlspecialchars($row['Size_Name']) ?></span>
+          <?php else: ?>
+              <span>사이즈: 없음</span>
+          <?php endif; ?>
         </div>
         <span class="price">₩<?= number_format($subtotal) ?></span>
       </div>

@@ -62,9 +62,10 @@ if (empty($selected)) {
     exit;
 }
 
+//장바구니에서 상품 가져오기 (사이즈 포함)
 $in = implode(',', array_fill(0, count($selected), '?'));
 $stmt = $conn->prepare("
-  SELECT p.Product_Id, p.Product_Price, c.Cart_Quantity 
+  SELECT p.Product_Id, p.Product_Price, c.Cart_Quantity, c.Size_Id 
   FROM Cart_CT c 
   JOIN Product_PD p ON c.Cart_PD_Id = p.Product_Id 
   WHERE c.Cart_Id IN ($in) AND c.Cart_UR_Id = ?
@@ -97,9 +98,16 @@ $ins->execute();
 $order_num = $conn->insert_id;
 
 // 주문상세 테이블 삽입
-$insd = $conn->prepare("INSERT INTO OrderDetail_OD (Order_Num, Product_Id, Quantity, UnitPrice) VALUES (?, ?, ?, ?)");
-foreach($items as $it){
-    $insd->bind_param("iiii", $order_num, $it['Product_Id'], $it['Cart_Quantity'], $it['Product_Price']);
+
+// $insd = $conn->prepare("INSERT INTO OrderDetail_OD (Order_Num, Product_Id, Quantity, UnitPrice) VALUES (?, ?, ?, ?)");
+// foreach($items as $it){
+//     $insd->bind_param("iiii", $order_num, $it['Product_Id'], $it['Cart_Quantity'], $it['Product_Price']);
+//     $insd->execute();
+// }
+
+$insd = $conn->prepare("INSERT INTO OrderDetail_OD (Order_Num, Product_Id, Size_Id, Quantity, UnitPrice) VALUES (?, ?, ?, ?, ?)");
+foreach($items as $it){//사이즈 저장
+    $insd->bind_param("iiiii", $order_num, $it['Product_Id'], $it['Size_Id'], $it['Cart_Quantity'], $it['Product_Price']);
     $insd->execute();
 }
 
@@ -111,6 +119,16 @@ $types = str_repeat('i', count($selected)) . 's';
 $del->bind_param($types, ...$params);
 $del->execute();
 
-header("Location: order_detail.php?order_num=$order_num");
+// header("Location: order_detail.php?order_num=$order_num");
+
+echo "
+<main class='checkout-main'>
+  <div class='complete-box'>
+    <h2>결제가 완료되었습니다!</h2>
+    <p>주문번호: $order_num</p>
+    <a href='home.php' class='btn'>메인페이지로 이동</a>
+  </div>
+</main>
+";
 exit;
 ?>
