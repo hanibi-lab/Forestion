@@ -29,7 +29,7 @@ body {
 
 /*공통 padding-top*/
 main, .cart-main, .mypage-main, .product-detail, .container 
-, .ODdetil-container, .myreviews-main, .main2 {
+, .ODdetil-container, .myreviews-main, .main2, complete-main {
   padding-top: 90px;
 }
 
@@ -1024,7 +1024,7 @@ section {
 
 .checkout-btn {
   display: inline-block;
-  background-color: #748873;
+  background-color: #96A78D;
   color: white;
   padding: 12px 24px;
   border-radius: 6px;
@@ -1034,7 +1034,7 @@ section {
 }
 
 .checkout-btn:hover {
-  background-color: #5a6a59;
+  background-color: #748873;
 }
 /* 
 .product-link {
@@ -1163,6 +1163,76 @@ section input, section select {
 .checkout-btn:hover {
   background-color: #748873;
 }
+
+/* ------------------- order_complete.php ------------------- */
+
+.complete-main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* .complete-box {
+  background: #fff;
+  width: 450px;
+  padding: 40px 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+.complete-box h2 {
+  font-size: 26px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.complete-box .order-number {
+  font-size: 18px;
+  margin-bottom: 30px;
+  color: #555;
+} */
+.complete-box {
+    width: 100%;
+    max-width: 600px;
+    background: #fff;
+    padding: 40px 30px;
+    border-radius: 10px;
+    text-align: center;
+    box-sizing: border-box;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.complete-box h1 {
+    font-size: 26px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.complete-box p {
+    font-size: 16px;
+    margin-bottom: 30px;
+    color: #444;
+}
+
+/* 버튼 (다른 페이지의 메인 버튼과 통일) */
+.complete-btn {
+    display: inline-block;
+    padding: 12px 25px;
+    background-color:#96A78D;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 15px;
+    transition: 0.2s;
+}
+
+.complete-btn:hover {
+    background-color: #748873;
+}
+
+
 
 /*---------------------- order_detail.php -----------------------*/
 

@@ -119,16 +119,38 @@ $types = str_repeat('i', count($selected)) . 's';
 $del->bind_param($types, ...$params);
 $del->execute();
 
-// header("Location: order_detail.php?order_num=$order_num");
+?>
+ <!-- header("Location: order_detail.php?order_num=$order_num");
 
 echo "
-<main class='checkout-main'>
+<main class='complete-main'>
   <div class='complete-box'>
     <h2>결제가 완료되었습니다!</h2>
-    <p>주문번호: $order_num</p>
-    <a href='home.php' class='btn'>메인페이지로 이동</a>
+    <p class='order-number'>주문번호: $order_num</p>
+    <div class='back-btn-box'>
+      <button class='back-btn' onclick=\"location.href='home.php'\">← 메인페이지로 이동</button>
+    </div>
   </div>
 </main>
 ";
-exit;
-?>
+exit; -->
+
+</html>
+<head>
+  <link rel="stylesheet" href="style.css">
+</head>
+  <body>
+    <?php require "./header.php"; ?> 
+    <main class="complete-main">
+        <div class="content-box">
+            <div class="complete-box">
+                <h1>결제가 완료되었습니다!</h1>
+                <p>주문해주셔서 감사합니다.</p>
+
+                <a href="home.php" class="complete-btn">메인페이지로 이동</a>
+            </div>
+        </div>
+    </main>
+    <?php require "./footer.php"; ?>
+  </body>
+</html>
