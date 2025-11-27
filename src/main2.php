@@ -57,6 +57,9 @@ if ($categoryId > 0) {
 $uid = isset($_SESSION['User_Id']) ? $_SESSION['User_Id'] : null;
 $categoryId = isset($_GET['tag']) ? (int)$_GET['tag'] : 0;
 
+//가격순 정렬 시 get 받기
+$sort = isset($_GET['sort']) ? $_GET['sort'] : 'recommended';
+
 // 🟢 상품 목록 불러오기 (JOIN + 찜 상태)
 $baseQuery = "
     SELECT 
@@ -75,7 +78,27 @@ if ($categoryId > 0) {
     $baseQuery .= " WHERE p.Product_Category = $categoryId";
 }
 
-$baseQuery .= " GROUP BY p.Product_Id LIMIT 100";
+// 가격순 정렬
+
+// $baseQuery .= " GROUP BY p.Product_Id LIMIT 100";
+$baseQuery .= " GROUP BY p.Product_Id";
+
+// 🔽 가격 정렬 추가
+switch ($sort) {
+    case 'priceAsc':
+        $baseQuery .= " ORDER BY p.Product_Price ASC";
+        break;
+
+    case 'priceDesc':
+        $baseQuery .= " ORDER BY p.Product_Price DESC";
+        break;
+
+    default:
+        $baseQuery .= " ORDER BY p.Product_Id DESC"; // 기본값
+        break;
+}
+
+$baseQuery .= " LIMIT 100";
 $result = $conn->query($baseQuery);
 
 ?>
@@ -106,7 +129,8 @@ $result = $conn->query($baseQuery);
     </div>
 
     <div class="sort">
-      <select id="sort-option">
+      <!-- <select id="sort-option"> -->
+      <select id="sort-option" onchange="changeSort(this.value)">
         <option value="recommended">추천순</option>
         <option value="popular">인기순</option>
         <option value="priceAsc">가격 낮은순</option>
@@ -185,4 +209,12 @@ async function toggleWish(imgElement) {
 }
 </script>
 
+<script>
+  // 가격순 정렬시 페이지 이동
+function changeSort(sort) {
+    const url = new URL(window.location.href);
+    url.searchParams.set("sort", sort);
+    window.location.href = url.toString();
+}
+</script>
 <?php require "./footer.php"; ?>
