@@ -84,11 +84,6 @@ while($r = $res->fetch_assoc()){
 }
 
 //주문 테이블 삽입
-// $ins = $conn->prepare("INSERT INTO Order_OD 
-//   (Order_UR_Id, Order_Date, Order_TotalPrice, Order_Payment, 
-//    Orderer_Name, Order_Phone, Order_Receiver_Name, Order_Receiver_Address, Order_Memo)
-//   VALUES (?, NOW(), ?, ?, ?, ?, ?, ?, ?)");
-
 $ins = $conn->prepare("INSERT INTO Order_OD 
   (Order_UR_Id, Order_Date, Order_TotalPrice, Order_Payment, 
    Orderer_Name, Order_Phone, Order_Receiver_Name, Order_Address, Order_Memo)
@@ -114,6 +109,34 @@ $insd = $conn->prepare("INSERT INTO OrderDetail_OD (Order_Num, Product_Id, Size_
 foreach($items as $it){//사이즈 저장
     $insd->bind_param("iiiii", $order_num, $it['Product_Id'], $it['Size_Id'], $it['Cart_Quantity'], $it['Product_Price']);
     $insd->execute();
+}
+
+// 🔽 결제 완료 후 재고 차감 (선택된 상품 기준)
+foreach ($selected as $cartId) {
+
+    // 1) 장바구니 정보 가져오기
+    $getCart = $conn->prepare("
+        SELECT Cart_PD_Id, Cart_Quantity 
+        FROM Cart_CT 
+        WHERE Cart_Id = ? AND Cart_UR_Id = ?
+    ");
+    $getCart->bind_param("is", $cartId, $uid);
+    $getCart->execute();
+    $cart = $getCart->get_result()->fetch_assoc();
+
+    if ($cart) {
+        $pid = $cart['Cart_PD_Id'];
+        $qty = $cart['Cart_Quantity'];
+
+        // 2) 재고 차감 (재고가 부족하지 않을 때만)
+        $updateStock = $conn->prepare("
+            UPDATE Product_PD
+            SET Product_Count = Product_Count - ?
+            WHERE Product_Id = ? AND Product_Count >= ?
+        ");
+        $updateStock->bind_param("iii", $qty, $pid, $qty);
+        $updateStock->execute();
+    }
 }
 
 // 장바구니에서 선택된 항목만 제거

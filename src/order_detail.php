@@ -33,14 +33,6 @@ if (!$order_num || !is_numeric($order_num)) {
 }
 
 // 주문 정보
-// $stmt = $conn->prepare("
-//   SELECT o.Order_Num, o.Order_Date, o.Order_TotalPrice, o.Order_Payment,
-//          o.Orderer_Name, o.Order_Phone, o.Order_Receiver_Name, 
-//          o.Order_Receiver_Address, o.Order_Memo
-//   FROM Order_OD o
-//   WHERE o.Order_Num = ? AND o.Order_UR_Id = ?
-// ");
-
 $stmt = $conn->prepare("
   SELECT o.Order_Num, o.Order_Date, o.Order_TotalPrice, o.Order_Payment,
          o.Orderer_Name, o.Order_Phone, o.Order_Receiver_Name, 
