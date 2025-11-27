@@ -83,10 +83,15 @@ while($r = $res->fetch_assoc()){
     $total += $r['Product_Price'] * $r['Cart_Quantity'];
 }
 
-// 주문 테이블 삽입
+//주문 테이블 삽입
+// $ins = $conn->prepare("INSERT INTO Order_OD 
+//   (Order_UR_Id, Order_Date, Order_TotalPrice, Order_Payment, 
+//    Orderer_Name, Order_Phone, Order_Receiver_Name, Order_Receiver_Address, Order_Memo)
+//   VALUES (?, NOW(), ?, ?, ?, ?, ?, ?, ?)");
+
 $ins = $conn->prepare("INSERT INTO Order_OD 
   (Order_UR_Id, Order_Date, Order_TotalPrice, Order_Payment, 
-   Orderer_Name, Order_Phone, Order_Receiver_Name, Order_Receiver_Address, Order_Memo)
+   Orderer_Name, Order_Phone, Order_Receiver_Name, Order_Address, Order_Memo)
   VALUES (?, NOW(), ?, ?, ?, ?, ?, ?, ?)");
 
 $ins->bind_param(
