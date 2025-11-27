@@ -48,7 +48,7 @@ $stmt = $conn->prepare("
   FROM Order_OD o
   WHERE o.Order_Num = ? AND o.Order_UR_Id = ?
 ");
-$stmt->bind_param("ii", $order_num, $uid);
+$stmt->bind_param("is", $order_num, $uid);
 $stmt->execute();
 $order = $stmt->get_result()->fetch_assoc();
 
@@ -56,7 +56,17 @@ if (!$order) {
   echo "<script>alert('존재하지 않는 주문입니다.'); location.href='home.php';</script>";
   exit;
 }
+$rawOrderPhone = $order['Order_Phone'] ?? '';
+$orderPhoneFormatted = '';
 
+if (!empty($rawOrderPhone)) {
+    $digits = preg_replace('/\D/', '', $rawOrderPhone);
+    if (preg_match('/^(\d{3})(\d{3,4})(\d{4})$/', $digits, $m)) {
+        $orderPhoneFormatted = $m[1] . '-' . $m[2] . '-' . $m[3];
+    } else {
+        $orderPhoneFormatted = $rawOrderPhone;
+    }
+}
 // 상품 목록
 
 // $stmt = $conn->prepare("
@@ -90,7 +100,9 @@ $details = $stmt->get_result();
       <h3>주문 상세 정보</h3>
       <p><strong>주문번호:</strong> <?= htmlspecialchars($order['Order_Num']) ?></p>
       <p><strong>주문자 이름:</strong> <?= htmlspecialchars($order['Orderer_Name']) ?></p>
-      <p><strong>주문자 전화번호:</strong> <?= htmlspecialchars($order['Order_Phone']) ?></p>
+      <p><strong>주문자 전화번호:</strong> 
+  <?= !empty($orderPhoneFormatted) ? htmlspecialchars($orderPhoneFormatted) : '정보 없음' ?>
+</p>
       <p><strong>수령자 이름:</strong> <?= htmlspecialchars($order['Order_Receiver_Name']) ?></p> 
       <p><strong>수령자 주소:</strong> <?= htmlspecialchars($order['Order_Address']) ?></p>
       <p><strong>배송 메모:</strong> <?= htmlspecialchars($order['Order_Memo']) ?></p>
