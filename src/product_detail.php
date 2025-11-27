@@ -53,6 +53,18 @@ if (isset($_SESSION['User_Id'])) {
     $is_wished = true;
   }
 }
+// ⭐ 상세 이미지 경로 만들기: 기본 이미지 파일명 + "2"
+$detailImg = '';
+if (!empty($product['Product_Image'])) {
+    $imgPath = $product['Product_Image'];          // 예: image/3set_garden_shovel.jpg
+    $dotPos  = strrpos($imgPath, '.');            // 마지막 '.' 위치 찾기
+
+    if ($dotPos !== false) {
+        // 앞부분 + '2' + 확장자
+        // => image/3set_garden_shovel2.jpg
+        $detailImg = substr($imgPath, 0, $dotPos) . '2' . substr($imgPath, $dotPos);
+    }
+}
 ?>
 
 <link rel="stylesheet" href="style.css">
@@ -154,9 +166,16 @@ if (isset($_SESSION['User_Id'])) {
 
     <!-- 상세정보 -->
     <section id="prdDetail">
-      <h3>상세정보</h3>
-      <p>여기에 상세 설명(이미지, HTML) 출력</p>
-    </section>
+  <h3>상세정보</h3>
+
+  <?php if (!empty($detailImg)): ?>
+    <img src="<?php echo htmlspecialchars($detailImg); ?>" 
+         alt="상품 상세 이미지" 
+         class="detail-img">
+  <?php else: ?>
+    <p>상세 이미지가 준비되지 않았습니다.</p>
+  <?php endif; ?>
+</section>
 
     <!-- 구매안내 (원본 내용 그대로) -->
     <section id="prdInfo">

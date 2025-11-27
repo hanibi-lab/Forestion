@@ -1364,3 +1364,10 @@ body {    /* 푸터 화면 하단에 두기 */
     flex-direction: column;
     min-height: 100vh;
 }
+.detail-img {
+    width: 100%;        /* 컨테이너 가로폭 꽉 채우기 */
+    height: auto;       /* 비율 유지 */
+    display: block;
+    margin: 20px auto;
+    object-fit: contain;  /* 이미지 비율 유지하며 전체 표시 */
+}
