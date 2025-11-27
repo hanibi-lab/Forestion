@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_account'])) {
 
     <!-- 프로필 영역 -->
     <div class="mypage-profile">
-      <img src="./images/default_profile.png" alt="기본 프로필 이미지" class="profile-img">
+      <img src="./image/default_profile.png" alt="기본 프로필 이미지" class="profile-img">
       <div class="profile-info">
         <h2><?= htmlspecialchars($u['User_Name']) ?> 님</h2>
         <p><strong>ID:</strong> <?= htmlspecialchars($u['User_Id']) ?></p>
