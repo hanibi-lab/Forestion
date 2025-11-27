@@ -1237,6 +1237,17 @@ section input, section select {
 /*---------------------- order_detail.php -----------------------*/
 
 /* 제목 */
+
+.ODdetil-container{
+    width: 100%;
+  max-width: 1000px;
+  margin: 100px auto;
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.1);
+}
+
 .ODdetil-container h2 {
   font-size: 24px;
   margin-bottom: 20px;
