@@ -33,10 +33,18 @@ if (!$order_num || !is_numeric($order_num)) {
 }
 
 // 주문 정보
+// $stmt = $conn->prepare("
+//   SELECT o.Order_Num, o.Order_Date, o.Order_TotalPrice, o.Order_Payment,
+//          o.Orderer_Name, o.Order_Phone, o.Order_Receiver_Name, 
+//          o.Order_Receiver_Address, o.Order_Memo
+//   FROM Order_OD o
+//   WHERE o.Order_Num = ? AND o.Order_UR_Id = ?
+// ");
+
 $stmt = $conn->prepare("
   SELECT o.Order_Num, o.Order_Date, o.Order_TotalPrice, o.Order_Payment,
          o.Orderer_Name, o.Order_Phone, o.Order_Receiver_Name, 
-         o.Order_Receiver_Address, o.Order_Memo
+         o.Order_Address, o.Order_Memo
   FROM Order_OD o
   WHERE o.Order_Num = ? AND o.Order_UR_Id = ?
 ");
@@ -84,7 +92,7 @@ $details = $stmt->get_result();
       <p><strong>주문자 이름:</strong> <?= htmlspecialchars($order['Orderer_Name']) ?></p>
       <p><strong>주문자 전화번호:</strong> <?= htmlspecialchars($order['Order_Phone']) ?></p>
       <p><strong>수령자 이름:</strong> <?= htmlspecialchars($order['Order_Receiver_Name']) ?></p> 
-      <p><strong>수령자 주소:</strong> <?= htmlspecialchars($order['Order_Receiver_Address']) ?></p>
+      <p><strong>수령자 주소:</strong> <?= htmlspecialchars($order['Order_Address']) ?></p>
       <p><strong>배송 메모:</strong> <?= htmlspecialchars($order['Order_Memo']) ?></p>
       <p><strong>결제방법:</strong> <?= htmlspecialchars($order['Order_Payment']) ?></p>
       <p><strong>주문일자:</strong> <?= $order['Order_Date'] ?></p>
