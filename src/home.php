@@ -54,6 +54,7 @@ if(isset($_SESSION['User_Id']) && isset($_SESSION['User_Name'])){
         // ");
         
         // ⭐ 변경됨 : 찜 여부 포함한 JOIN 쿼리로 변경
+        // LIMIT 8 삭제(11-27)
         $uid = isset($_SESSION['User_Id']) ? $_SESSION['User_Id'] : null;
 
         if ($uid) {
@@ -69,7 +70,6 @@ if(isset($_SESSION['User_Id']) && isset($_SESSION['User_Name'])){
                     ON p.Product_Id = f.Favorite_PD_Id 
                 AND f.Favorite_UR_Id = '$uid'
                 GROUP BY p.Product_Id
-                LIMIT 8
             ");
         } else {
             $result = $conn->query("
@@ -81,7 +81,6 @@ if(isset($_SESSION['User_Id']) && isset($_SESSION['User_Name'])){
                 LEFT JOIN Product_Size ps ON p.Product_Id = ps.Product_Id
                 LEFT JOIN Size s ON ps.Size_Id = s.Size_Id
                 GROUP BY p.Product_Id
-                LIMIT 8
             ");
         }
         

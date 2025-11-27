@@ -1040,14 +1040,15 @@ section {
 .delete-btn {
   background-color: #b33a3a;
   color: white;
-  padding: 8px 14px;
+  padding: 5px 10px;
   border-radius: 6px;
   text-decoration: none;
   transition: 0.3s;
 }
 
 .delete-btn:hover {
-  background-color: #922a2a;
+  background-color: rgba(170, 62, 62, 0.897);
+  color:#000000;
 }
 
 .checkout-btn-wrap {
