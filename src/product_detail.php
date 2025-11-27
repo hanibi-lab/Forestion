@@ -76,6 +76,14 @@ if (!empty($product['Product_Image'])) {
       <div class="product-flex">
         <div class="product-image">
           <img src="<?php echo htmlspecialchars($product['Product_Image']); ?>" alt="">
+          <!-- ⭐ 상세 이미지 우측 하단 찜 아이콘 (home/main2와 동일 스타일) -->
+          <img 
+            src="<?php echo $is_wished ? 'image/wish_on(2).png' : 'image/wish_off(2).png'; ?>" 
+            alt="찜하기" 
+            id="wishToggle" 
+            data-id="<?php echo $product['Product_Id']; ?>" 
+            class="wish-img"
+          >
         </div>
 
         <!-- 가격, 사이즈, 재고 -->
@@ -119,14 +127,8 @@ if (!empty($product['Product_Image'])) {
 
                 <button type="button" id="addCartBtn" class="cart-btn">장바구니 담기</button>
 
-                <!-- ⭐ 최신 찜 버튼 그대로 반영 -->
-                <img 
-                  src="<?php echo $is_wished ? 'image/wish_on(2).png' : 'image/wish_off(2).png'; ?>" 
-                  alt="찜하기" 
-                  id="wishToggle" 
-                  data-id="<?php echo $product['Product_Id']; ?>" 
-                  class="wish-img"
-                >
+                <!-- ✅ 기존 찜 이미지는 여기서 제거 (이미 위 product-image 안에 배치됨) -->
+
               </form>
 
               <script>

@@ -126,6 +126,13 @@ $result = $conn->query($baseQuery);
               <img src="<?php echo htmlspecialchars($row['Product_Image']); ?>" 
                    alt="<?php echo htmlspecialchars($row['Product_Name']); ?>">
             </a>
+            <!-- ⭐ 썸네일 안 오른쪽 아래 찜 아이콘 -->
+            <img 
+              src="<?php echo $row['is_wished'] ? 'image/wish_on(2).png' : 'image/wish_off(2).png'; ?>"
+              alt="찜하기"
+              class="wish-img"
+              data-id="<?php echo $row['Product_Id']; ?>"
+              onclick="toggleWish(this)">
           </div>
 
           <div class="description">
@@ -141,21 +148,13 @@ $result = $conn->query($baseQuery);
               <p>₩<?php echo number_format($row['Product_Price']); ?></p>
             </div>
 
-            <!-- 사이즈 + 재고 -->
+            <!-- 사이즈 + 재고 (텍스트만) -->
             <div class="wish-meta">
               <p>
                 사이즈: 
-                <?php echo $row['Sizes'] ? htmlspecialchars($row['Sizes']) : '없음'; ?> </p>
-                <p> 재고: <?php echo $row['Product_Count']; ?>
+                <?php echo $row['Sizes'] ? htmlspecialchars($row['Sizes']) : '없음'; ?>
+                / 재고: <?php echo $row['Product_Count']; ?>
               </p>
-
-              <!-- 찜 이미지 -->
-              <img 
-                src="<?php echo $row['is_wished'] ? 'image/wish_on(2).png' : 'image/wish_off(2).png'; ?>"
-                alt="찜하기"
-                class="wish-img"
-                data-id="<?php echo $row['Product_Id']; ?>"
-                onclick="toggleWish(this)">
             </div>
           </div>
         </li>

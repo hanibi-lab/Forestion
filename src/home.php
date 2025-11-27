@@ -93,6 +93,14 @@ if(isset($_SESSION['User_Id']) && isset($_SESSION['User_Name'])){
                     <img src="<?php echo $row['Product_Image']; ?>" 
                         alt="<?php echo $row['Product_Name']; ?>">
                 </a>
+                <!-- ⭐ 찜 아이콘을 썸네일 안 (우측 하단)으로 이동 -->
+                <img 
+                    src="<?php echo $row['is_wished'] ? 'image/wish_on(2).png' : 'image/wish_off(2).png'; ?>"
+                    alt="찜하기" 
+                    class="wish-img" 
+                    data-id="<?php echo $row['Product_Id']; ?>"
+                    onclick="toggleWish(this)"
+                >
             </div>
 
             <div class="description">
@@ -121,13 +129,7 @@ if(isset($_SESSION['User_Id']) && isset($_SESSION['User_Name'])){
                         / 재고: <?php echo htmlspecialchars($row['Product_Count']); ?>
                     </p>
 
-                    <img 
-                        src="<?php echo $row['is_wished'] ? 'image/wish_on(2).png' : 'image/wish_off(2).png'; ?>"
-                        alt="찜하기" 
-                        class="wish-img" 
-                        data-id="<?php echo $row['Product_Id']; ?>"
-                        onclick="toggleWish(this)"
-                    >
+                    <!-- 여기 있던 찜 이미지 img 태그는 썸네일 쪽으로만 이동했고, 삭제 X (위로 위치만 변경) -->
                 </div>
             </div>
         </li>
