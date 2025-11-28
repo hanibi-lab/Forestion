@@ -1264,6 +1264,7 @@ section input, section select {
 
 .complete-btn:hover {
     background-color: #748873;
+    color:white;
 }
 
 
