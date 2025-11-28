@@ -86,8 +86,10 @@ if(isset($_SESSION['User_Id']) && isset($_SESSION['User_Name'])){
         
         while($row = $result->fetch_assoc()):
         ?> 
-        <li class="prdList__item">
-            <div class="thumbnail">
+         <li class="prdList__item">
+            <!-- 재고가 0일 떄 품절 -->
+          <!-- <div class="thumbnail"> -->
+          <div class="thumbnail <?php echo ($row['Product_Count'] <= 0) ? 'soldout' : ''; ?>">
                 <a href="product_detail.php?id=<?php echo $row['Product_Id']; ?>">
                     <img src="<?php echo $row['Product_Image']; ?>" 
                         alt="<?php echo $row['Product_Name']; ?>">
@@ -125,7 +127,9 @@ if(isset($_SESSION['User_Id']) && isset($_SESSION['User_Name'])){
                                 ? htmlspecialchars($row['Sizes']) 
                                 : "없음"; 
                         ?>
-                        / 재고: <?php echo htmlspecialchars($row['Product_Count']); ?>
+                        <!-- / 재고: <?php echo htmlspecialchars($row['Product_Count']); ?> -->
+                        <!-- 재고가 0이면 품절이라고 글씨 띄우기 -->
+                         / 재고: <?php echo $row['Product_Count'] > 0 ? htmlspecialchars($row['Product_Count']) : '품절'; ?>
                     </p>
 
                     <!-- 여기 있던 찜 이미지 img 태그는 썸네일 쪽으로만 이동했고, 삭제 X (위로 위치만 변경) -->

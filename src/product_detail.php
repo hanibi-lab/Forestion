@@ -97,7 +97,8 @@ if (!empty($product['Product_Image'])) {
               <?php echo $product['Sizes'] ? htmlspecialchars($product['Sizes']) : "없음"; ?>
             </p>
 
-            <p>재고: <?php echo htmlspecialchars($product['Product_Count']); ?></p>
+            <!-- <p>재고: </?php echo htmlspecialchars($product['Product_Count']); ?></p> -->
+            <p>재고 : <?php echo ($product['Product_Count']<=0)? "품절" : htmlspecialchars($product['Product_Count']);?>
           </div>
           
             <!-- 수량 + 장바구니 + 찜하기 -->

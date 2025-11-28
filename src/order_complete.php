@@ -111,7 +111,7 @@ foreach($items as $it){//사이즈 저장
     $insd->execute();
 }
 
-// 🔽 결제 완료 후 재고 차감 (선택된 상품 기준)
+// 🔽 결제 완료 후 재고 차감 
 foreach ($selected as $cartId) {
 
     // 1) 장바구니 정보 가져오기
