@@ -861,6 +861,13 @@ section {
   line-height: 1.6;
   margin: 0;
 }
+/* 상품 상세 - 구매안내 테이블 캡션 스타일 */
+#prdInfo table caption {
+    font-size: 18px;      /* 글자 크기 키움 */
+    font-weight: 700;     /* 두껍게 */
+    padding: 10px 0;      /* 위아래 여백 */
+    color: #333;          /* 글자 색 살짝 강조 */
+}
 
 /* ------------------- mypage.php ------------------- */
 /* ----- 마이페이지 공통 ----- */
