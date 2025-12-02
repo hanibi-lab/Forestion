@@ -1,0 +1,576 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: localhost
+-- 생성 시간: 25-12-02 23:01
+-- 서버 버전: 10.4.28-MariaDB
+-- PHP 버전: 8.2.4
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- 데이터베이스: `Forestion`
+--
+
+-- --------------------------------------------------------
+
+--
+-- 테이블 구조 `Cart_CT`
+--
+
+CREATE TABLE `Cart_CT` (
+  `Cart_Id` int(11) NOT NULL,
+  `Cart_UR_Id` varchar(20) NOT NULL,
+  `Cart_PD_Id` int(11) NOT NULL,
+  `Size_Id` int(11) NOT NULL,
+  `Cart_Quantity` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- 테이블의 덤프 데이터 `Cart_CT`
+--
+
+INSERT INTO `Cart_CT` (`Cart_Id`, `Cart_UR_Id`, `Cart_PD_Id`, `Size_Id`, `Cart_Quantity`) VALUES
+(2, 'leememmie', 1, 1, 7),
+(10, 'leememmie', 0, 0, 3),
+(11, 'leememmie', 4, 0, 1);
+
+-- --------------------------------------------------------
+
+--
+-- 테이블 구조 `Category`
+--
+
+CREATE TABLE `Category` (
+  `Category_Id` int(11) NOT NULL,
+  `Category_Name` varchar(45) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- 테이블의 덤프 데이터 `Category`
+--
+
+INSERT INTO `Category` (`Category_Id`, `Category_Name`) VALUES
+(1, '식물'),
+(2, '씨앗'),
+(3, '도구'),
+(4, '기타');
+
+-- --------------------------------------------------------
+
+--
+-- 테이블 구조 `Favorite_FL`
+--
+
+CREATE TABLE `Favorite_FL` (
+  `Favorite_UR_Id` varchar(20) NOT NULL,
+  `Favorite_PD_Id` int(11) NOT NULL,
+  `Favorite_Date` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- 테이블의 덤프 데이터 `Favorite_FL`
+--
+
+INSERT INTO `Favorite_FL` (`Favorite_UR_Id`, `Favorite_PD_Id`, `Favorite_Date`) VALUES
+('leememmie', 1, '2025-11-27 17:28:09');
+
+-- --------------------------------------------------------
+
+--
+-- 테이블 구조 `OrderDetail_OD`
+--
+
+CREATE TABLE `OrderDetail_OD` (
+  `OrderDetail_Num` int(11) NOT NULL,
+  `Order_Num` int(11) NOT NULL,
+  `Product_Id` int(11) NOT NULL,
+  `Size_Id` int(11) NOT NULL,
+  `Quantity` int(11) NOT NULL,
+  `UnitPrice` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- 테이블 구조 `Order_OD`
+--
+
+CREATE TABLE `Order_OD` (
+  `Order_Num` int(11) NOT NULL,
+  `Order_UR_Id` varchar(20) NOT NULL,
+  `Order_Date` datetime NOT NULL,
+  `Order_TotalPrice` int(11) NOT NULL,
+  `Order_Payment` enum('네이버페이','토스페이','가상결제') NOT NULL,
+  `Orderer_Name` varchar(50) NOT NULL,
+  `Order_Phone` varchar(20) NOT NULL,
+  `Order_Receiver_Name` varchar(50) NOT NULL,
+  `Order_Address` varchar(255) NOT NULL,
+  `Order_Memo` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- 테이블 구조 `PayHistory_PH`
+--
+
+CREATE TABLE `PayHistory_PH` (
+  `PayHistory_Id` int(11) NOT NULL,
+  `PayHistory_Result` tinyint(4) NOT NULL,
+  `PayHistory_OD_Num` int(11) NOT NULL,
+  `PayHistory_PD_Id` int(11) NOT NULL,
+  `PayHistory_PD_Price` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- 테이블 구조 `Product_PD`
+--
+
+CREATE TABLE `Product_PD` (
+  `Product_Id` int(11) NOT NULL,
+  `Product_Name` varchar(256) NOT NULL,
+  `Product_Category` int(11) NOT NULL,
+  `Product_Price` int(11) NOT NULL,
+  `Product_Image` varchar(255) NOT NULL,
+  `Product_Count` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- 테이블의 덤프 데이터 `Product_PD`
+--
+
+INSERT INTO `Product_PD` (`Product_Id`, `Product_Name`, `Product_Category`, `Product_Price`, `Product_Image`, `Product_Count`) VALUES
+(0, '선인장', 1, 1000, 'image/선인장.jpg', 7),
+(1, '괴마옥 파인애플 선인장', 1, 3900, 'image/goemaok_pineapple_cactus.jpg', 4),
+(2, '새싹 적무 씨앗 20g 새싹채소 종자', 2, 3900, 'image/sprout_red_radish_seed_20g.jpg', 12),
+(3, '만추상회 원예도구 세트 3종 화분 삽 손갈퀴 가드닝', 3, 3900, 'image/manchu_gardening_set_3pcs.jpg', 28),
+(4, '중형 뱅갈고무나무 개업식 축하 집들이화분', 1, 3900, 'image/bengal_rubber_tree_medium.jpg', 9),
+(5, '미니화분 그린 다이닝', 1, 3900, 'image/mini_pot_green_dining.jpg', 14),
+(6, '인테리어 승진 축하 미니 화분 독일항아리크림', 1, 3900, 'image/interior_promotion_german_pot.jpg', 23),
+(7, '실내 인테리어화분 공기정화식물 플랜테리어', 1, 3900, 'image/interior_airpurify_planterior.jpg', 17),
+(8, '폴리셔스 폴리시아스 키우기쉬운식물 거실화분', 1, 3900, 'image/polyscias_easy_plant.jpg', 27),
+(9, '식물만 화분커버 화이트 그늘에서 잘 자라는 식물', 1, 3900, 'image/white_shade_loving_plant.jpg', 11),
+(10, '물 관엽 실내인테리어 소품 생화 화분', 1, 3900, 'image/water_interior_living_plant.jpg', 22),
+(11, '무광 미니화분 키우기 실내공기정화식물', 1, 3900, 'image/matte_mini_pot_airpurify.jpg', 13),
+(12, '화분 실내공기정화식물 실내 반려식물', 1, 3900, 'image/potted_airpurify_petplant.jpg', 21),
+(13, '소품 실내공기정화식물 거실화분 실내화초', 1, 3900, 'image/livingroom_airpurify_decoplant.jpg', 18),
+(14, '공기정화식물 사무실 개업선물 반려식물 플랜테리어', 1, 3900, 'image/office_airpurify_planterior.jpg', 24),
+(15, '식물 플랜테리어 승진 테이블야자 포트 화분', 1, 3900, 'image/table_palm_planterior.jpg', 16),
+(16, '폴리시아스 파비안 작은나무 공기정화식물 화분', 1, 18900, 'image/polyscias_fabian_tree.jpg', 29),
+(17, '벤자민고무나무 녹보수 실내식물', 1, 60000, 'image/benjamin_rubber_tree.jpg', 8),
+(18, '거실화분 공기정화식물 화분 반음지식물', 1, 129000, 'image/livingroom_shade_plant.jpg', 10),
+(19, '스파트필름 율마 크루시아 스투키화분 아비스', 1, 36800, 'image/spathiphyllum_yulma_stuki.jpg', 15),
+(20, '개업선물 인테리어식물 실내화초', 1, 44000, 'image/interior_opening_gift_plant.jpg', 9),
+(21, '천냥금 시멘트형 공기정화식물 개업화분', 1, 58900, 'image/cheonnyeanggeum_cement_pot.jpg', 7),
+(22, '실내 인테리어화분 공기정화식물 플랜테리어2', 1, 2900, 'image/interior_airpurify_planterior2.jpg', 25),
+(23, '집 가정용 화분 씨앗 꽃모종키우기키트', 2, 6900, 'image/home_seed_kit.jpg', 20),
+(24, '식물재배기 5종 씨앗 화분 세트', 2, 24830, 'image/plant_grow_5set.jpg', 12),
+(25, '재배 키트 그로우캔 시리즈 씨앗 키우기 텃밭', 2, 7500, 'image/growcan_seed_kit.jpg', 14),
+(26, '씨앗 심기 강안콩 관찰 학습 화분', 2, 13910, 'image/kangan_bean_obs_seed.jpg', 18),
+(27, '방울토마토 무지개화분 씨앗 새싹 재배 키우기 세트', 2, 5900, 'image/rainbow_tomato_seed_kit.jpg', 24),
+(28, '해바라기 한컵화분 씨앗 새싹 재배 키우기 세트', 2, 4900, 'image/sunflower_onecup_kit.jpg', 26),
+(29, '메타세콰이어 씨앗', 2, 14250, 'image/metasequoia_seed.jpg', 11),
+(30, '적색난쟁이 강낭콩 키우기 씨앗 화분', 2, 7000, 'image/red_dwarf_bean_seed.jpg', 17),
+(31, '백일홍 씨앗', 2, 1940, 'image/zinnia_seed.jpg', 22),
+(32, '반려식물 화분재배키트 그림봉투화분 씨앗', 2, 2800, 'image/petplant_envelope_seedkit.jpg', 18),
+(33, '식물 재배 키트 세트 학습 교구 씨앗 방울토마토 화분', 2, 3100, 'image/tomato_learning_seed_kit.jpg', 13),
+(34, '블랙커런트 씨앗', 2, 14250, 'image/blackcurrant_seed.jpg', 17),
+(35, '종이 원예 텃밭 상자 흙 홈 가드닝 메시지 씨앗', 2, 8950, 'image/paper_garden_seedbox.jpg', 27),
+(36, '투톤사각화분_나팔꽃/화분키우기,씨앗심기,재배세트', 2, 5200, 'image/twotone_pot_morningglory.jpg', 16),
+(37, '가정용화분 꽃 씨앗 모종 식물 키우기', 2, 6900, 'image/home_flower_seed.jpg', 21),
+(38, '방아 씨앗', 2, 2850, 'image/banga_seed.jpg', 30),
+(39, '바질키우기 바질 허브 씨앗', 2, 5000, 'image/basil_seed.jpg', 23),
+(40, '봄꽃 씨앗 심기 화분 재배 씨 기르기', 2, 2800, 'image/spring_flower_seed.jpg', 18),
+(41, '3종세트 꽃삽 화분삽 원예도구', 3, 4700, 'image/3set_garden_shovel.jpg', 19),
+(42, '물조리개 대 그린 화분도구 관수도구 정원용물뿌리개', 3, 16110, 'image/green_watering_can.jpg', 12),
+(43, '물 분무기 가압 스프레이 병 물뿌리개 꽃 샤워 화분', 3, 12000, 'image/press_spray_bottle.jpg', 26),
+(44, '소형 컬러 원예가위 화분 손잡이 손질용', 3, 6220, 'image/small_color_pruner.jpg', 15),
+(45, '원예 분갈이 매트 화분 작업 정원 도구 흙받이', 3, 5500, 'image/gardening_repotting_mat.jpg', 21),
+(46, '원예 다용도 봄철 여름철 수확 화분삽', 3, 1500, 'image/multi_garden_shovel.jpg', 8),
+(47, '텃밭 화단 정원 화분 분갈이', 3, 7800, 'image/garden_bed_repotting.jpg', 17),
+(48, '만추상회 미니 원예도구 세트 3종 화분', 3, 1370, 'image/manchu_mini_garden_3pcs.jpg', 27),
+(49, '대나무 컵받침 4개 단열 매트 화분 접시', 3, 16400, 'image/bamboo_coaster_4pcs.jpg', 14),
+(50, '식물 지지대 반원 울타리 경계선 펜스 원예 화분', 3, 2100, 'image/half_circle_fence_support.jpg', 22),
+(51, '식물 지지대 넝쿨지지대 화분장식', 3, 7800, 'image/vine_support_stand.jpg', 11),
+(52, '식물지지대 원형 화초 지주대 토마토 넝쿨 화분', 3, 700, 'image/round_plant_support.jpg', 18),
+(53, '이색포트소형 모종화분 원예화분 원형', 3, 520, 'image/unique_small_seed_pot.jpg', 20),
+(54, '가벼운 플라스틱 오크통 소형', 3, 8550, 'image/plastic_oak_small.jpg', 16),
+(55, '넓은물조리개 화분물주는통 대형 눈금 텃밭물뿌리기', 3, 12800, 'image/large_measuring_watering_can.jpg', 23),
+(56, '가벼움 빈티지 홈가드닝 식물재배용 꽃소품', 3, 38410, 'image/vintage_gardening_item.jpg', 13),
+(57, '일회용 플라스틱 화분통 화분포트', 3, 90, 'image/disposable_plastic_pot.jpg', 25),
+(58, '태즈컴퍼니 플라스틱 모종삽 원예도구 화분 분갈이', 3, 2100, 'image/taez_plastic_seed_shovel.jpg', 10),
+(59, '식물용 물조리개 3호 2.1L', 3, 9020, 'image/plant_watering_can_2L.jpg', 19),
+(60, '분갈이흙 20L 원예용 용토 식물영양제 거름 텃밭 화분', 4, 10000, 'image/soil_20L.jpg', 24),
+(61, '분갈이흙 분갈이용토 화분 흙 10리터', 4, 5400, 'image/soil_10L.jpg', 18),
+(62, '분갈이 흙 8리터', 4, 2000, 'image/soil_8L.jpg', 13),
+(63, '분갈이흙 10L 텃밭 배양토 배양토 원예용상토 화분 흙', 4, 7000, 'image/soil_10L_cultivation.jpg', 21),
+(64, '지렁이 배양토 분변토 10L 화분흙 분갈이흙', 4, 3600, 'image/worm_casting_10L.jpg', 17),
+(65, '닥터조 원예 복합비료 1kg', 4, 6000, 'image/dr_jo_fertilizer_1kg.jpg', 25),
+(66, '원예 고형비료 화분 1Kg', 4, 13970, 'image/solid_fertilizer_1kg.jpg', 20),
+(67, '싱싱코트 소형 대형 식물 비료 화분영양제 알갱이', 4, 2000, 'image/singsingcoat_fertilizer.jpg', 16),
+(68, '식물영양제 화분영양제 모든식물용', 4, 3300, 'image/all_plant_nutrients.jpg', 28),
+(69, '원예비료 영양제 꽃 관엽식물 화초 난 동양란 서양란 비료', 4, 2300, 'image/general_garden_fertilizer.jpg', 14);
+
+-- --------------------------------------------------------
+
+--
+-- 테이블 구조 `Product_Size`
+--
+
+CREATE TABLE `Product_Size` (
+  `Product_Id` int(11) NOT NULL,
+  `Size_Id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- 테이블의 덤프 데이터 `Product_Size`
+--
+
+INSERT INTO `Product_Size` (`Product_Id`, `Size_Id`) VALUES
+(1, 1),
+(1, 2),
+(1, 3),
+(3, 1),
+(3, 2),
+(3, 3),
+(5, 1),
+(5, 2),
+(5, 3),
+(6, 1),
+(6, 2),
+(6, 3),
+(7, 1),
+(7, 2),
+(7, 3),
+(8, 1),
+(8, 2),
+(8, 3),
+(9, 1),
+(9, 2),
+(9, 3),
+(10, 1),
+(10, 2),
+(10, 3),
+(11, 1),
+(11, 2),
+(11, 3),
+(12, 1),
+(12, 2),
+(12, 3),
+(13, 1),
+(13, 2),
+(13, 3),
+(14, 1),
+(14, 2),
+(14, 3),
+(15, 1),
+(15, 2),
+(15, 3),
+(16, 3),
+(16, 4),
+(17, 2),
+(17, 3),
+(17, 4),
+(18, 3),
+(18, 4),
+(19, 1),
+(19, 2),
+(19, 3),
+(20, 1),
+(20, 2),
+(20, 3),
+(21, 3),
+(21, 4),
+(22, 1),
+(22, 2),
+(22, 3),
+(41, 2),
+(41, 3),
+(41, 4),
+(44, 1),
+(47, 3),
+(47, 4),
+(48, 1),
+(48, 2),
+(48, 3),
+(49, 3),
+(49, 4),
+(53, 1),
+(53, 2),
+(53, 3),
+(54, 1),
+(54, 2),
+(54, 3),
+(55, 3),
+(55, 4),
+(56, 2),
+(56, 3),
+(56, 4),
+(57, 2),
+(57, 3),
+(57, 4),
+(58, 1),
+(58, 2),
+(58, 3),
+(59, 2),
+(59, 3),
+(59, 4);
+
+-- --------------------------------------------------------
+
+--
+-- 테이블 구조 `Review_RV`
+--
+
+CREATE TABLE `Review_RV` (
+  `Review_Id` int(11) NOT NULL,
+  `Review_UR_Id` varchar(20) NOT NULL,
+  `Review_PD_Id` int(11) NOT NULL,
+  `Review_Rating` tinyint(4) NOT NULL,
+  `Review_Content` text NOT NULL,
+  `Review_Date` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- 테이블 구조 `Size`
+--
+
+CREATE TABLE `Size` (
+  `Size_Id` int(11) NOT NULL,
+  `Size_Name` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- 테이블의 덤프 데이터 `Size`
+--
+
+INSERT INTO `Size` (`Size_Id`, `Size_Name`) VALUES
+(0, '없음'),
+(1, '미니'),
+(2, '소형'),
+(3, '중형'),
+(4, '대형');
+
+-- --------------------------------------------------------
+
+--
+-- 테이블 구조 `User_UR`
+--
+
+CREATE TABLE `User_UR` (
+  `User_Name` varchar(10) NOT NULL,
+  `User_Id` varchar(20) NOT NULL,
+  `User_Pwd` varchar(256) NOT NULL,
+  `User_PhoneNum` varchar(15) DEFAULT NULL,
+  `User_Addr` varchar(256) NOT NULL,
+  `User_SignDate` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- 테이블의 덤프 데이터 `User_UR`
+--
+
+INSERT INTO `User_UR` (`User_Name`, `User_Id`, `User_Pwd`, `User_PhoneNum`, `User_Addr`, `User_SignDate`) VALUES
+('adminuser', 'adminuser', '4f5cec75c744bd39b5126debbb7cffb8', '01012341234', '12341234', '2025-12-02 21:56:44'),
+('임혜미', 'leememmie', '3cefcc04dd9037e2e051549812cf97a9', '01024424196', 'fffff', '2025-09-18 06:38:09');
+
+--
+-- 덤프된 테이블의 인덱스
+--
+
+--
+-- 테이블의 인덱스 `Cart_CT`
+--
+ALTER TABLE `Cart_CT`
+  ADD PRIMARY KEY (`Cart_Id`),
+  ADD KEY `Cart_UR_Id` (`Cart_UR_Id`),
+  ADD KEY `Cart_PD_Id` (`Cart_PD_Id`),
+  ADD KEY `fk_cart_size` (`Size_Id`);
+
+--
+-- 테이블의 인덱스 `Category`
+--
+ALTER TABLE `Category`
+  ADD PRIMARY KEY (`Category_Id`);
+
+--
+-- 테이블의 인덱스 `Favorite_FL`
+--
+ALTER TABLE `Favorite_FL`
+  ADD PRIMARY KEY (`Favorite_UR_Id`,`Favorite_PD_Id`),
+  ADD KEY `Favorite_PD_Id` (`Favorite_PD_Id`);
+
+--
+-- 테이블의 인덱스 `OrderDetail_OD`
+--
+ALTER TABLE `OrderDetail_OD`
+  ADD PRIMARY KEY (`OrderDetail_Num`),
+  ADD KEY `Order_Num` (`Order_Num`),
+  ADD KEY `Product_Id` (`Product_Id`);
+
+--
+-- 테이블의 인덱스 `Order_OD`
+--
+ALTER TABLE `Order_OD`
+  ADD PRIMARY KEY (`Order_Num`),
+  ADD KEY `Order_UR_Id` (`Order_UR_Id`);
+
+--
+-- 테이블의 인덱스 `PayHistory_PH`
+--
+ALTER TABLE `PayHistory_PH`
+  ADD PRIMARY KEY (`PayHistory_Id`),
+  ADD KEY `PayHistory_OD_Num` (`PayHistory_OD_Num`),
+  ADD KEY `PayHistory_PD_Id` (`PayHistory_PD_Id`);
+
+--
+-- 테이블의 인덱스 `Product_PD`
+--
+ALTER TABLE `Product_PD`
+  ADD PRIMARY KEY (`Product_Id`),
+  ADD KEY `Product_Category` (`Product_Category`);
+
+--
+-- 테이블의 인덱스 `Product_Size`
+--
+ALTER TABLE `Product_Size`
+  ADD PRIMARY KEY (`Product_Id`,`Size_Id`),
+  ADD KEY `Size_Id` (`Size_Id`);
+
+--
+-- 테이블의 인덱스 `Review_RV`
+--
+ALTER TABLE `Review_RV`
+  ADD PRIMARY KEY (`Review_Id`),
+  ADD KEY `Review_UR_Id` (`Review_UR_Id`),
+  ADD KEY `Review_PD_Id` (`Review_PD_Id`);
+
+--
+-- 테이블의 인덱스 `Size`
+--
+ALTER TABLE `Size`
+  ADD PRIMARY KEY (`Size_Id`);
+
+--
+-- 테이블의 인덱스 `User_UR`
+--
+ALTER TABLE `User_UR`
+  ADD PRIMARY KEY (`User_Id`);
+
+--
+-- 덤프된 테이블의 AUTO_INCREMENT
+--
+
+--
+-- 테이블의 AUTO_INCREMENT `Cart_CT`
+--
+ALTER TABLE `Cart_CT`
+  MODIFY `Cart_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- 테이블의 AUTO_INCREMENT `OrderDetail_OD`
+--
+ALTER TABLE `OrderDetail_OD`
+  MODIFY `OrderDetail_Num` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- 테이블의 AUTO_INCREMENT `Order_OD`
+--
+ALTER TABLE `Order_OD`
+  MODIFY `Order_Num` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- 테이블의 AUTO_INCREMENT `PayHistory_PH`
+--
+ALTER TABLE `PayHistory_PH`
+  MODIFY `PayHistory_Id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- 테이블의 AUTO_INCREMENT `Review_RV`
+--
+ALTER TABLE `Review_RV`
+  MODIFY `Review_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- 테이블의 AUTO_INCREMENT `Size`
+--
+ALTER TABLE `Size`
+  MODIFY `Size_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- 덤프된 테이블의 제약사항
+--
+
+--
+-- 테이블의 제약사항 `Cart_CT`
+--
+ALTER TABLE `Cart_CT`
+  ADD CONSTRAINT `cart_ct_ibfk_1` FOREIGN KEY (`Cart_UR_Id`) REFERENCES `User_UR` (`User_Id`),
+  ADD CONSTRAINT `cart_ct_ibfk_2` FOREIGN KEY (`Cart_PD_Id`) REFERENCES `Product_PD` (`Product_Id`),
+  ADD CONSTRAINT `fk_cart_size` FOREIGN KEY (`Size_Id`) REFERENCES `Size` (`Size_Id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- 테이블의 제약사항 `Favorite_FL`
+--
+ALTER TABLE `Favorite_FL`
+  ADD CONSTRAINT `favorite_fl_ibfk_1` FOREIGN KEY (`Favorite_UR_Id`) REFERENCES `User_UR` (`User_Id`),
+  ADD CONSTRAINT `favorite_fl_ibfk_2` FOREIGN KEY (`Favorite_PD_Id`) REFERENCES `Product_PD` (`Product_Id`);
+
+--
+-- 테이블의 제약사항 `OrderDetail_OD`
+--
+ALTER TABLE `OrderDetail_OD`
+  ADD CONSTRAINT `orderdetail_od_ibfk_1` FOREIGN KEY (`Order_Num`) REFERENCES `Order_OD` (`Order_Num`),
+  ADD CONSTRAINT `orderdetail_od_ibfk_2` FOREIGN KEY (`Product_Id`) REFERENCES `Product_PD` (`Product_Id`);
+
+--
+-- 테이블의 제약사항 `Order_OD`
+--
+ALTER TABLE `Order_OD`
+  ADD CONSTRAINT `order_od_ibfk_1` FOREIGN KEY (`Order_UR_Id`) REFERENCES `User_UR` (`User_Id`);
+
+--
+-- 테이블의 제약사항 `PayHistory_PH`
+--
+ALTER TABLE `PayHistory_PH`
+  ADD CONSTRAINT `payhistory_ph_ibfk_1` FOREIGN KEY (`PayHistory_OD_Num`) REFERENCES `Order_OD` (`Order_Num`),
+  ADD CONSTRAINT `payhistory_ph_ibfk_2` FOREIGN KEY (`PayHistory_PD_Id`) REFERENCES `Product_PD` (`Product_Id`);
+
+--
+-- 테이블의 제약사항 `Product_PD`
+--
+ALTER TABLE `Product_PD`
+  ADD CONSTRAINT `product_pd_ibfk_1` FOREIGN KEY (`Product_Category`) REFERENCES `Category` (`Category_Id`);
+
+--
+-- 테이블의 제약사항 `Product_Size`
+--
+ALTER TABLE `Product_Size`
+  ADD CONSTRAINT `product_size_ibfk_1` FOREIGN KEY (`Product_Id`) REFERENCES `Product_PD` (`Product_Id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `product_size_ibfk_2` FOREIGN KEY (`Size_Id`) REFERENCES `Size` (`Size_Id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- 테이블의 제약사항 `Review_RV`
+--
+ALTER TABLE `Review_RV`
+  ADD CONSTRAINT `review_rv_ibfk_1` FOREIGN KEY (`Review_UR_Id`) REFERENCES `User_UR` (`User_Id`),
+  ADD CONSTRAINT `review_rv_ibfk_2` FOREIGN KEY (`Review_PD_Id`) REFERENCES `Product_PD` (`Product_Id`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
