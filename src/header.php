@@ -2,6 +2,7 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+$isAdmin = isset($_SESSION['User_Id']) && $_SESSION['User_Id'] === 'adminuser';
 ?>
 
 <!DOCTYPE html>
@@ -46,7 +47,10 @@ if (session_status() === PHP_SESSION_NONE) {
       </nav>
 
       <div class="nav-icons"> 
-        <!-- 검색 창 -->
+        <!-- 관리자 전용 메뉴 (관리자일 때만 보이게) -->
+        <?php if ($isAdmin): ?>
+          <a href="admin/simple_admin.php" class="login-text">Admin</a>
+        <?php endif; ?>
          
         <!-- 마이페이지 -->
         <a href="mypage.php">

@@ -1483,3 +1483,293 @@ body {    /* 푸터 화면 하단에 두기 */
     margin: 20px auto;
     object-fit: contain;  /* 이미지 비율 유지하며 전체 표시 */
 }
+/* ------------------------------------
+   Forestion 관리자 페이지 스타일
+   (simple_admin.php 전용)
+------------------------------------ */
+
+:root {
+    --green-main: #2f8f46;
+    --green-dark: #256f37;
+    --green-light: #e9f6ee;
+    --border-color: #dde2e7;
+    --bg-page: #f4f6f9;
+    --text-main: #333;
+}
+
+.admin-shell {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-page);
+    color: var(--text-main);
+}
+
+.admin-header {
+    background: linear-gradient(90deg, var(--green-main), #46b35c);
+    color: #fff;
+    padding: 14px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.admin-header-left {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.admin-title {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.admin-subtitle {
+    font-size: 12px;
+    opacity: 0.9;
+}
+
+.admin-header-right {
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.admin-header-right a {
+    color: #fff;
+    text-decoration: underline;
+    font-size: 12px;
+}
+
+.admin-main {
+    padding: 24px 32px 32px;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.section-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    align-items: flex-start;
+}
+
+.card {
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06);
+    padding: 18px 20px 20px;
+}
+
+.card-narrow {
+    flex: 0 0 360px;
+    max-width: 360px;
+}
+
+.card-wide {
+    flex: 1;
+    min-width: 0;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.card-title {
+    font-size: 16px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    background: var(--green-light);
+    color: var(--green-dark);
+    border: 1px solid #b7e0c3;
+}
+
+.card-desc {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+.add-form label {
+    display:block;
+    margin-top:10px;
+    font-size: 13px;
+}
+
+.add-form input,
+.add-form select {
+    padding:6px 8px;
+    font-size:13px;
+    width:100%;
+    border-radius: 6px;
+    border:1px solid #ccd3dd;
+}
+
+.add-form input:focus,
+.add-form select:focus {
+    outline:none;
+    border-color: var(--green-main);
+    box-shadow: 0 0 0 1px rgba(47, 143, 70, 0.25);
+}
+
+.btn {
+    padding: 6px 12px;
+    font-size: 13px;
+    cursor: pointer;
+    border-radius: 999px;
+    border: none;
+    transition: 0.05s ease;
+    white-space: nowrap;
+}
+
+.btn:active {
+    transform: translateY(1px);
+}
+
+.btn-primary {
+    background: var(--green-main);
+    color: #fff;
+    box-shadow: 0 2px 4px rgba(47, 143, 70, 0.3);
+}
+
+.btn-primary:hover {
+    background: var(--green-dark);
+}
+
+.btn-warning {
+    background: #f39c12;
+    color: #fff;
+}
+
+.btn-warning:hover {
+    background: #d27f06;
+}
+
+.btn-danger {
+    background: #e74c3c;
+    color: #fff;
+}
+
+.btn-danger:hover {
+    background: #c0392b;
+}
+
+.btn-ghost {
+    background: transparent;
+    color: var(--green-dark);
+    border: 1px solid #c6e7cf;
+}
+
+.btn-ghost:hover {
+    background: #f1faf4;
+}
+
+.table-wrap {
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    background: #fff;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 12px;
+}
+
+thead {
+    background: #f1f5f9;
+}
+
+th, td {
+    padding: 6px 8px;
+    border-bottom: 1px solid #edf1f5;
+}
+
+th {
+    text-align: left;
+    font-weight: 600;
+    color: #475569;
+}
+
+tbody tr:nth-child(even) {
+    background: #fafbfc;
+}
+
+tbody tr:hover {
+    background: #eef7f1;
+}
+
+.status-pill {
+    display:inline-block;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.status-soldout {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.status-on {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.inline-form {
+    display:inline-flex;
+    align-items:center;
+    gap:4px;
+    margin:0;
+}
+
+.inline-form input[type="number"] {
+    width: 70px;
+    padding: 4px 6px;
+    font-size: 12px;
+    border-radius: 6px;
+    border:1px solid #cbd5e1;
+}
+
+.product-img-thumb {
+    width:42px;
+    height:42px;
+    border-radius: 8px;
+    object-fit: cover;
+    border:1px solid #e2e8f0;
+}
+
+.pill-id {
+    display:inline-block;
+    padding: 2px 6px;
+    border-radius: 999px;
+    background:#e2e8f0;
+    font-size:11px;
+    color:#475569;
+}
+
+.muted {
+    font-size: 11px;
+    color: #94a3b8;
+}
+

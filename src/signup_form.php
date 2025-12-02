@@ -8,25 +8,25 @@
     <!-- 헤더 --> 
     <!-- <form action="signup.php" method="post"> -->
     <form action="signup.php" method="post" class="sign-form">
-        <h2>SIGN UP</h2>
+        <h2>회원가입/h2>
         
-        <label>User Name</label>
+        <label>사용자 이름</label>
         <input type="text" name="User_Name" placeholder="User Name" required><br>
 
-        <label>User ID</label>
+        <label>아이디</label>
         <input type="text" name="User_Id" placeholder="User ID" required><br>
 
-        <label>Password</label>
+        <label>비밀번호</label>
         <input type="password" name="User_Pwd" placeholder="Password" required><br>
 
-        <label>Phone Number</label>
-        <input type="text" name="User_PhoneNum" placeholder="Phone Number"><br>
+        <label>전화번호</label>
+        <input type="text" name="User_PhoneNum" maxlength="15" inputmode="numeric" pattern="\d*"><br>
 
-        <label>Address</label>
+        <label>주소</label>
         <input type="text" name="User_Addr" placeholder="Address"><br>
 
-        <button type="submit">Sign Up</button>
-        <a href="index.php">Back to Login</a>
+        <button type="submit">가입하기</button>
+        <a href="index.php">로그인 하러가기</a>
     </form>
 </body>
 </html>
