@@ -131,10 +131,18 @@ $result = $conn->query($baseQuery);
     <div class="sort">
       <!-- <select id="sort-option"> -->
       <select id="sort-option" onchange="changeSort(this.value)">
-        <option value="recommended">추천순</option>
+        <!-- <option value="recommended">추천순</option>
         <option value="popular">인기순</option>
         <option value="priceAsc">가격 낮은순</option>
-        <option value="priceDesc">가격 높은순</option>
+        <option value="priceDesc">가격 높은순</option> -->
+        <option value="recommended" <?php echo ($sort == 'recommended') ? 'selected' : ''; ?>>
+            추천순 </option>
+        <option value="popular" <?php echo ($sort == 'popular') ? 'selected' : ''; ?>>
+            인기순 </option>
+        <option value="priceAsc" <?php echo ($sort == 'priceAsc') ? 'selected' : ''; ?>>
+            가격 낮은순 </option>
+        <option value="priceDesc" <?php echo ($sort == 'priceDesc') ? 'selected' : ''; ?>>
+            가격 높은순</option>
       </select>
     </div>
   </div>
