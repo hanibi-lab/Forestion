@@ -8,7 +8,7 @@
     <!-- 헤더 --> 
     <!-- <form action="signup.php" method="post"> -->
     <form action="signup.php" method="post" class="sign-form">
-        <h2>회원가입/h2>
+        <h2>회원가입</h2>
         
         <label>사용자 이름</label>
         <input type="text" name="User_Name" placeholder="User Name" required><br>
